@@ -10,4 +10,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'my-app';
+  footer= 'Universidad del Quindío - 2024-2';
 }
