@@ -1,1 +1,39 @@
-<p>carrito works!</p>
+<form [formGroup]="carrito" (ngSubmit)="Mostrarcarrito()">    
+    
+    <div>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Nombre del Evento</th>
+                <th>Localidad</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Concierto de Música</td>
+                <td>VIP</td>
+                <td>2</td>
+                <td>$300</td>
+                <td><button class="remove-item">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Teatro Clásico</td>
+                <td>General</td>
+                <td>4</td>
+                <td>$200</td>
+                <td><button class="remove-item">Eliminar</button></td>
+            </tr>
+            <!-- Añadir más filas según los items en el carrito -->
+        </tbody>
+    </table>
+
+    <div class="cart-actions">
+        <a href="#" class="cart-button">Proceder al Pago</a>
+    </div>
+</div>
+
+</form>
