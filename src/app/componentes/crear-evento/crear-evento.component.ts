@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // Importa CommonModule
+import Swal from 'sweetalert2';
+import { EventoDTO } from '../../dto/evento-dto';
+
 
 
 @Component({
@@ -14,15 +17,17 @@ export class CrearEventoComponent {
 
   crearEventoForm!: FormGroup;
   tiposDeEvento: string[];
+  eventosService: any;
 
-  
+
 
   public crearEvento(){
-    console.log(this.crearEventoForm.value);
+    this.eventosService.crear(this.crearEventoForm.value as EventoDTO);
+    Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
    }
-   
 
- 
+
+
 
 
 constructor(private formBuilder: FormBuilder) {
@@ -45,9 +50,9 @@ private crearFormulario() {
 }
 public onFileChange(event:any, tipo:string){
   if (event.target.files.length > 0) {
-    const files = event.target.files;     
- 
- 
+    const files = event.target.files;
+
+
     switch(tipo){
       case 'localidades':
         this.crearEventoForm.get('imagenLocalidades')?.setValue(files[0]);
@@ -56,11 +61,11 @@ public onFileChange(event:any, tipo:string){
         this.crearEventoForm.get('imagenPortada')?.setValue(files[0]);
         break;
     }
- 
- 
+
+
   }
  }
- 
+
 get localidades(): FormArray {
   return this.crearEventoForm.get('localidades') as FormArray;
 }

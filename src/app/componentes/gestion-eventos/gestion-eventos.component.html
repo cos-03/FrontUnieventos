@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header ps-5 pt-4 pb-4">
+      <h5 class="mb-0"><i class="fa-solid fa-location-dot me-3"></i>Gestión de eventos</h5>
+    </div>
+
+    <div class="card-body p-5">
+      <div class="mb-3">
+        <button type="button" routerLink="/crear-evento" class="btn btn-success me-2">
+          <i class="fa-solid fa-plus me-1"></i> Crear
+        </button>
+      </div>
+
+      <div class="mb-3">
+        <button type="button" class="btn btn-danger anim-e" data-bs-toggle="modal" data-bs-target="#borrar">
+          <i class="fa-solid fa-trash me-1"></i> Eliminar
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-responsive">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Imagen</th>
+              <th>Ciudad</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <td><input type="checkbox" class="form-check-input" /></td>
+              <td><p>001</p></td>
+              <td><p>Concierto de Rock</p></td>
+              <td><p>Música</p></td>
+              <td><img src="ruta/imagen1.jpg" alt="Concierto de Rock" class="img-fluid" style="max-width: 100px;" /></td>
+              <td><p>Bogotá</p></td>
+              <td><p>2024-11-05</p></td>
+              <td><p>Activo</p></td>
+              <td><a routerLink="/detalle-evento/001">Ver detalle</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="form-check-input" /></td>
+              <td><p>002</p></td>
+              <td><p>Feria de Arte</p></td>
+              <td><p>Exposición</p></td>
+              <td><img src="ruta/imagen2.jpg" alt="Feria de Arte" class="img-fluid" style="max-width: 100px;" /></td>
+              <td><p>Medellín</p></td>
+              <td><p>2024-11-10</p></td>
+              <td><p>Activo</p></td>
+              <td><a routerLink="/detalle-evento/002">Ver detalle</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="form-check-input" /></td>
+              <td><p>003</p></td>
+              <td><p>Seminario de Tecnología</p></td>
+              <td><p>Conferencia</p></td>
+              <td><img src="ruta/imagen3.jpg" alt="Seminario de Tecnología" class="img-fluid" style="max-width: 100px;" /></td>
+              <td><p>Cali</p></td>
+              <td><p>2024-11-15</p></td>
+              <td><p>Activo</p></td>
+              <td><a routerLink="/detalle-evento/003">Ver detalle</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
