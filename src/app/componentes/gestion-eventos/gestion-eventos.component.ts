@@ -19,9 +19,11 @@ export class GestionEventosComponent {
   textoBtnEliminar!: string;
 
 
- constructor(public eventosService:EventosService) {
-   this.eventos = eventosService.listar();
- }
+  constructor(public eventosService:EventosService) {
+    this.eventos = eventosService.listar();
+    this.seleccionados = [];
+    this.textoBtnEliminar = "";
+  }
 
  ngOnInit(): void {
   this.eventos = this.eventosService.listar(); // Aquí llamas el método listar
