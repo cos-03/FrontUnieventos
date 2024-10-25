@@ -13,17 +13,16 @@ import Swal from 'sweetalert2';
  styleUrl: './gestion-eventos.component.css'
 })
 export class GestionEventosComponent {
-seleccionados: any;
 
-
-
+  seleccionados!: EventoDTO[];
  eventos: EventoDTO[];
-textoBtnEliminar: any;
+  textoBtnEliminar!: string;
 
 
  constructor(public eventosService:EventosService) {
    this.eventos = eventosService.listar();
  }
+
  public seleccionar(evento: EventoDTO, estado: boolean) {
 
 
@@ -54,6 +53,7 @@ textoBtnEliminar: any;
     this.textoBtnEliminar = "";
   }
  }
+
 
  public confirmarEliminacion() {
   Swal.fire({
