@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 export class GestionEventosComponent {
 
   seleccionados!: EventoDTO[];
- eventos: EventoDTO[];
+  eventos: EventoDTO[] = [];
   textoBtnEliminar!: string;
 
 
@@ -23,6 +23,9 @@ export class GestionEventosComponent {
    this.eventos = eventosService.listar();
  }
 
+ ngOnInit(): void {
+  this.eventos = this.eventosService.listar(); // Aquí llamas el método listar
+}
  public seleccionar(evento: EventoDTO, estado: boolean) {
 
 

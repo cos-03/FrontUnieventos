@@ -1,62 +1,65 @@
-<form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()">
+<form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()" class="container mt-4">
 
-    <div>
-        <label>Nombre: </label>
-        <input type="text" />
-    </div>
+  <!-- Campo Nombre -->
+  <div class="mb-3">
+      <label class="form-label">Nombre:</label>
+      <input type="text" class="form-control" formControlName="nombre"/>
+  </div>
 
+  <!-- Campo Descripción -->
+  <div class="mb-3">
+      <label class="form-label">Descripción:</label>
+      <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+  </div>
 
-    <div>
-        <label>Descripción: </label>
-        <textarea ></textarea>
-    </div>
-
-
-    <div class="col-6">
-      <label class="form-label">Tipo: </label>
-      <select formControlName="tipo" class="form-select" >
+  <!-- Campo Tipo -->
+  <div class="mb-3">
+      <label class="form-label">Tipo:</label>
+      <select formControlName="tipo" class="form-select">
           <option value="">Seleccione un tipo</option>
-          @for (item of tiposDeEvento; track $index) {
-              <option value="{{item}}">{{item}}</option>
-          }
+          <!-- Se usa un *ngFor en lugar de @for ya que Angular utiliza *ngFor -->
+          <option *ngFor="let item of tiposDeEvento" [value]="item">{{ item }}</option>
       </select>
-   </div>
+  </div>
 
+  <!-- Campo Dirección -->
+  <div class="mb-3">
+      <label class="form-label">Dirección:</label>
+      <input type="text" class="form-control" formControlName="direccion"/>
+  </div>
 
+  <!-- Campo Ciudad -->
+  <div class="mb-3">
+      <label class="form-label">Ciudad:</label>
+      <input type="text" class="form-control" formControlName="ciudad"/>
+  </div>
 
+  <!-- Campo Localidades -->
+  <div formArrayName="localidades" class="mb-3">
+      <label class="form-label">Localidades:</label>
+      <button type="button" class="btn btn-primary btn-sm mb-2" (click)="agregarLocalidad()">Agregar localidad</button>
 
-    <div>
-        <label>Dirección: </label>
-        <input type="text" />
-    </div>
-
-
-    <div>
-        <label>Ciudad: </label>
-        <input type="text" />
-    </div>
-
-    <div formArrayName="localidades">
-        <label>Localidades: </label>
-        <button type="button" (click)="agregarLocalidad()">Agregar localidad</button>
-        <div *ngFor="let localidad of localidades.controls; let i=index">
-          <input [formControlName]="i" placeholder="Nombre localidad" />
-          <button type="button" (click)="eliminarLocalidad(i)">Eliminar</button>
-        </div>
+      <div *ngFor="let localidad of localidades.controls; let i=index" class="input-group mb-2">
+          <input [formControlName]="i" placeholder="Nombre localidad" class="form-control"/>
+          <button type="button" class="btn btn-danger" (click)="eliminarLocalidad(i)">Eliminar</button>
       </div>
+  </div>
 
+  <!-- Campo Imagen evento -->
+  <div class="mb-3">
+      <label class="form-label">Imagen evento:</label>
+      <input type="file" class="form-control" (change)="onFileChange($event, 'portada')"/>
+  </div>
 
-      <div>
-        <label>Imagen evento: </label>
-        <input type="file" (change)="onFileChange($event, 'portada')" />
-     </div>
+  <!-- Campo Imagen localidades -->
+  <div class="mb-3">
+      <label class="form-label">Imagen localidades:</label>
+      <input type="file" class="form-control" (change)="onFileChange($event, 'localidades')"/>
+  </div>
 
+  <!-- Botón Crear evento -->
+  <div class="text-center">
+      <button type="submit" class="btn btn-success">Crear evento</button>
+  </div>
 
-     <div>
-        <label>Imagen localidades: </label>
-        <input type="file" (change)="onFileChange($event, 'localidades')" />
-     </div>
-
-
-    <button type="submit" >Crear evento</button>
- </form>
+</form>
