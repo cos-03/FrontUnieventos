@@ -11,6 +11,7 @@ import { AgregarItemComponent } from './componentes/agregar-item/agregar-item.co
 import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
 import { RecuperarContraseniaComponent } from './componentes/recuperar-contrasenia/recuperar-contrasenia.component';
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
+import { HistorialComprasComponent } from './historial-compras/historial-compras.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
@@ -25,5 +26,6 @@ export const routes: Routes = [
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña
+   { path: 'historial-compras', component: HistorialComprasComponent },  // Ruta para recuperar contraseña
    { path: "**", pathMatch: "full", redirectTo: "" }  // Redirección a la página de inicio para rutas no encontradas
 ];

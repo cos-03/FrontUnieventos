@@ -14,15 +14,16 @@ import Swal from 'sweetalert2';
 })
 export class GestionEventosComponent {
 
-  seleccionados!: EventoDTO[];
+  seleccionados: EventoDTO[];
   eventos: EventoDTO[] = [];
-  textoBtnEliminar!: string;
+  textoBtnEliminar: string;
 
 
   constructor(public eventosService:EventosService) {
-    this.eventos = eventosService.listar();
     this.seleccionados = [];
     this.textoBtnEliminar = "";
+    this.eventos = eventosService.listar();
+
   }
 
  ngOnInit(): void {

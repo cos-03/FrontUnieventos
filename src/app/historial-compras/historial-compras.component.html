@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Compras</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Historial de Compras</h2>
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Número de Orden</th>
+              <th>Evento</th>
+              <th>Cantidad</th>
+              <th>Total Pagado</th>
+              <th>Fecha de Compra</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Concierto Rock</td>
+              <td>2</td>
+              <td>$100.000</td>
+              <td>2023-09-15</td>
+              <td><span class="badge badge-success">Completado</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm">Ver Detalles</button>
+                <button class="btn btn-danger btn-sm">Cancelar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>002</td>
+              <td>Obra de Teatro</td>
+              <td>4</td>
+              <td>$200.000</td>
+              <td>2023-10-01</td>
+              <td><span class="badge badge-warning">Pendiente</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm">Ver Detalles</button>
+                <button class="btn btn-danger btn-sm">Cancelar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>003</td>
+              <td>Partido de Fútbol</td>
+              <td>3</td>
+              <td>$150.000</td>
+              <td>2023-10-10</td>
+              <td><span class="badge badge-danger">Cancelado</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm" disabled>Ver Detalles</button>
+                <button class="btn btn-danger btn-sm" disabled>Cancelar</button>
+              </td>
+            </tr>
+            <!-- Agrega más filas según sea necesario -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-5">
+    <p>&copy; 2024 Universidad del Quindío</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
