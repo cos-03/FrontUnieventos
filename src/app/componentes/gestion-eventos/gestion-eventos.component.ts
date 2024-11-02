@@ -88,7 +88,9 @@ export class GestionEventosComponent {
  }
 
 
-
+ listarEventosAdmin(){
+  
+ }
 
 }
 

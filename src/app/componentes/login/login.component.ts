@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../servicios/auth.service';
+import { LoginDTO } from '../../dto/login-dto';
+import Swal from 'sweetalert2';
+import { TokenService } from '../../servicios/token.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +17,11 @@ export class LoginComponent {
 
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+
+  constructor(private formBuilder: FormBuilder, private authService: AuthService,private tokenService: TokenService) {
+    
     this.crearFormulario();
+    
   }
 
   private crearFormulario() {
@@ -25,10 +32,27 @@ export class LoginComponent {
   }
 
   public login() {
-    if (this.loginForm.valid) {
-      console.log('Login exitoso:', this.loginForm.value);
-    } else {
-      console.log('Formulario inválido');
-    }
+   
+  
+    const loginDTO = this.loginForm.value as LoginDTO;
+    console.log(loginDTO);
+  
+    this.authService.iniciarSesion(loginDTO).subscribe({
+      next: (data) => {
+        this.tokenService.login(data.respuesta.token);
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.error.respuesta
+        });
+      },
+    });
   }
-}
+  
+   
+   
+   }
+   
+  

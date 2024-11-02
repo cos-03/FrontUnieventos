@@ -3,6 +3,8 @@ import { AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup,
 import { CommonModule } from '@angular/common';  // Importa CommonModule
 import Swal from 'sweetalert2';
 import { EventoDTO } from '../../dto/evento-dto';
+import { PublicoService } from '../../servicios/publico.service';
+import { AdministradorService } from '../../servicios/administrador.service';
 
 
 
@@ -18,6 +20,7 @@ export class CrearEventoComponent {
   crearEventoForm!: FormGroup;
   tiposDeEvento: string[];
   eventosService: any;
+  ciudades: any;
 
 
 
@@ -28,11 +31,15 @@ export class CrearEventoComponent {
 
 
 
+   
+ 
 
-
-constructor(private formBuilder: FormBuilder) {
+constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,administradorService: AdministradorService ) {
  this.crearFormulario();
  this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
+ this.ciudades = [];
+ this.listarCiudades();
+ this.listarTipos();
 }
 
 
@@ -77,4 +84,26 @@ eliminarLocalidad(indice: number) {
   this.localidades.removeAt(indice);
 }
 
+public listarTipos(){
+  this.publicoService.listarTipos().subscribe({
+    next: (data) => {
+      this.tiposDeEvento = data.respuesta;
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+ }
+ 
+ public listarCiudades(){
+  this.publicoService.listarCiudades().subscribe({
+    next: (data) => {
+      this.ciudades = data.respuesta;
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+ }
+ 
 }
