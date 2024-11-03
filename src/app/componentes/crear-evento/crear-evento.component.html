@@ -16,7 +16,7 @@
   <div class="mb-3">
       <label class="form-label">Tipo:</label>
       <select formControlName="tipo" class="form-select">
-          <option value="">Seleccione un tipo</option>
+          <option value="">Seleccione un tipo evento</option>
           <!-- Se usa un *ngFor en lugar de @for ya que Angular utiliza *ngFor -->
           <option *ngFor="let item of tiposDeEvento" [value]="item">{{ item }}</option>
       </select>
@@ -31,7 +31,12 @@
   <!-- Campo Ciudad -->
   <div class="mb-3">
       <label class="form-label">Ciudad:</label>
-      <input type="text" class="form-control" formControlName="ciudad"/>
+      <select formControlName="tipo" class="form-select">
+      <option value="">Seleccione una ciudad</option>
+          <!-- Se usa un *ngFor en lugar de @for ya que Angular utiliza *ngFor -->
+          <option *ngFor="let item of ciudades" [value]="item">{{ item }}</option>
+        </select>
+
   </div>
 
   <!-- Campo Localidades -->

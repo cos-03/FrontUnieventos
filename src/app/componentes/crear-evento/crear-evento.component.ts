@@ -20,7 +20,7 @@ export class CrearEventoComponent {
   crearEventoForm!: FormGroup;
   tiposDeEvento: string[];
   eventosService: any;
-  ciudades: any;
+  ciudades: string[];
 
 
 
@@ -37,9 +37,11 @@ export class CrearEventoComponent {
 constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,administradorService: AdministradorService ) {
  this.crearFormulario();
  this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
- this.ciudades = [];
+ this.ciudades = ['armenia', 'cartagena', 'pereira', 'cali'];
  this.listarCiudades();
  this.listarTipos();
+ 
+ 
 }
 
 

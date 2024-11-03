@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class PublicoService {
 
 
- private publicoURL = "http://localhost:8082/api/publico";
+ private publicoURL = "http://localhost:8082/api/general";
 
 
  constructor(private http: HttpClient) { }
@@ -27,7 +27,7 @@ export class PublicoService {
 
 
  public listarEventos(): Observable<MensajeDTO> {
-   return this.http.get<MensajeDTO>(`${this.publicoURL}/evento/obtener-todos`);
+   return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-todos-eventos`);
  }
 
 

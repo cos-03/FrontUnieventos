@@ -1,8 +1,15 @@
+import { LocalidadDTO } from "./localidad-dto";
+
+
 export interface CrearEventoDTO {
-    cedula: String ,
+    
+   
     nombre: String ,
-    telefono: String ,
-    direccion: String ,
-    correo: String ,
-    password: String 
+    descripcion: String ,
+    imagenLocalidades: String ,
+    tipo: string ,
+    fechaEvento: Date ,
+    ciudad: String ,
+    localidades: LocalidadDTO ,
+    imagenImportada:String ,
 }
