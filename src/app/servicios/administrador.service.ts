@@ -4,6 +4,9 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
 import { CrearEventoDTO } from '../dto/crear-evento-dto';
 import { EditarEventoDTO } from '../dto/editar-evento-dto';
+import{ CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
+import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
+import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
 
 
 @Injectable({
@@ -17,6 +20,10 @@ export class AdministradorService {
 
  constructor(private http: HttpClient) { }
 
+   // Método para crear un cupón
+   public crearCupon(cupon: CrearCuponDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.adminURL}/crear-cupon`, cupon);
+  }
 
  public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
    return this.http.post<MensajeDTO>(`${this.adminURL}/evento/crear`, crearEventoDTO);
