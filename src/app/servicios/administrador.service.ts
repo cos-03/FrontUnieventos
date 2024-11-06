@@ -19,12 +19,12 @@ export class AdministradorService {
 
 
  public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/evento/crear`, crearEventoDTO);
+   return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO);
  }
 
 
  public actualizarEvento(editarEventoDTO: EditarEventoDTO): Observable<MensajeDTO> {
-   return this.http.put<MensajeDTO>(`${this.adminURL}/evento/editar`, editarEventoDTO);
+   return this.http.put<MensajeDTO>(`${this.adminURL}/editar-evento`, editarEventoDTO);
  }
 
 
@@ -34,7 +34,7 @@ export class AdministradorService {
 
 
  public eliminarEvento(id: string): Observable<MensajeDTO> {
-   return this.http.delete<MensajeDTO>(`${this.adminURL}/evento/eliminar/${id}`);
+   return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar-evento/${id}`);
  }
 
 
@@ -44,7 +44,7 @@ export class AdministradorService {
 
 
  public subirImagen(imagen: FormData): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/imagen/subir`, imagen);
+   return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen);
  }
 
 

@@ -24,7 +24,7 @@ export class CrearEventoComponent {
   ciudades: string[];
   imagenPortada?: File;
   imagenLocalidades?: File;
-  adminService: any;
+  //adminService: any;
 
 
 
@@ -52,7 +52,7 @@ export class CrearEventoComponent {
    
  
 
-constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,administradorService: AdministradorService ) {
+constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,private adminService: AdministradorService ) {
  this.crearFormulario();
  this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
  this.ciudades = ['armenia', 'cartagena', 'pereira', 'cali'];
