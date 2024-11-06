@@ -24,6 +24,7 @@ export class CrearEventoComponent {
   ciudades: string[];
   imagenPortada?: File;
   imagenLocalidades?: File;
+  
   //adminService: any;
 
 
@@ -32,8 +33,7 @@ export class CrearEventoComponent {
 
 
     const crearEventoDTO = this.crearEventoForm.value as CrearEventoDTO;
-   
-   
+
     this.adminService.crearEvento(crearEventoDTO).subscribe({
       next: (data: { respuesta: any; }) => {
         Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
@@ -58,9 +58,11 @@ constructor(private formBuilder: FormBuilder,private publicoService: PublicoServ
  this.ciudades = ['armenia', 'cartagena', 'pereira', 'cali'];
  this.listarCiudades();
  this.listarTipos();
+
  
  
 }
+
 
 
 private crearFormulario() {
@@ -87,7 +89,12 @@ get localidades(): FormArray {
   return this.crearEventoForm.get('localidades') as FormArray;
 }
 agregarLocalidad() {
-  this.localidades.push(this.formBuilder.control('', Validators.required));
+  const localidadFormGroup = this.formBuilder.group({
+    nombre: ['', Validators.required],
+    precio: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+    capacidadMaxima: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+  });
+  this.localidades.push(localidadFormGroup);
 }
 
 eliminarLocalidad(indice: number) {

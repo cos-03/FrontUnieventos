@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
@@ -16,11 +16,20 @@ export class AdministradorService {
 
 
  constructor(private http: HttpClient) { }
+ private getAuthHeaders(): HttpHeaders {
+  const token = sessionStorage.getItem('AuthToken');
+  return new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+}
 
 
+ //public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
+ //  return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO);
+ //}
  public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO);
- }
+  return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO, { headers: this.getAuthHeaders() });
+}
 
 
  public actualizarEvento(editarEventoDTO: EditarEventoDTO): Observable<MensajeDTO> {
@@ -43,9 +52,12 @@ export class AdministradorService {
  }
 
 
+// public subirImagen(imagen: FormData): Observable<MensajeDTO> {
+  // return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen);
+ //}
  public subirImagen(imagen: FormData): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen);
- }
+  return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen, { headers: this.getAuthHeaders() });
+}
 
 
 }
