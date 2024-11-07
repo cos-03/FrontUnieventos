@@ -27,7 +27,7 @@ export class RegistroComponent{
     {
     cedula: ['', [Validators.required]],
     nombre: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    correo: ['', [Validators.required, Validators.email]],
     direccion: ['', [Validators.required]],
     telefono: ['', [Validators.required, Validators.maxLength(10)]],
     password: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(7)]],
