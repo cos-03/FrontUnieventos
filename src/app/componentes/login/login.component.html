@@ -1,16 +1,16 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" class="p-4 border rounded shadow-sm">
   <div class="mb-3">
-    <label for="email" class="form-label">Email:</label>
+    <label for="correo" class="form-label">Email:</label>
     <input
-      id="email"
+      id="correo"
       type="email"
-      formControlName="email"
+      formControlName="correo"
       class="form-control"
-      [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+      [ngClass]="{'is-invalid': loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched}"
     />
-    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-feedback">
-      <small *ngIf="loginForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
-      <small *ngIf="loginForm.get('email')?.errors?.['email']">Ingrese un email válido.</small>
+    <div *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched" class="invalid-feedback">
+      <small *ngIf="loginForm.get('correo')?.errors?.['required']">El email es obligatorio.</small>
+      <small *ngIf="loginForm.get('correo')?.errors?.['email']">Ingrese un email válido.</small>
     </div>
   </div>
 

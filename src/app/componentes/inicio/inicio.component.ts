@@ -10,10 +10,13 @@ import { PublicoService } from '../../servicios/publico.service';
 })
 export class InicioComponent {
   eventos!: [];
+  ciudades!:[];
 
   constructor(private publicoService: PublicoService) {
     this.eventos = [];
+    this.ciudades = [];
     this.obtenerEventos();
+    this.listarCiudades();
  }
 
  public obtenerEventos(){
@@ -26,6 +29,17 @@ export class InicioComponent {
     },
   });
  }
+ public listarCiudades(){
+  this.publicoService.listarCiudades().subscribe({
+    next: (data) => {
+      this.ciudades = data.respuesta;
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+ }
+ 
  
  
 }

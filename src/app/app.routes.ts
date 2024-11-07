@@ -13,15 +13,17 @@ import { RecuperarContraseniaComponent } from './componentes/recuperar-contrasen
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
 import { GestionCuponesComponent } from './componentes/gestion-cupones/gestion-cupones.component';
 import { HistorialComprasComponent } from './componentes/historial-compras/historial-compras.component';
+import { LoginGuard } from './guards/permiso.service';
+import { RolesGuard } from './guards/roles.service';
+import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.component';
 
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
-   { path: 'login', component: LoginComponent },  // Ruta para login
-   { path: 'registro', component: RegistroComponent },  // Ruta para registro
-   { path: "gestion-eventos", component: GestionEventosComponent },
-   { path: "gestion-cupones", component: GestionCuponesComponent },
-   { path: 'crear-evento', component: CrearEventoComponent },  // Ruta para crear evento
+  // { path: 'login', component: LoginComponent },  // Ruta para login
+  // { path: 'registro', component: RegistroComponent },  // Ruta para registro
+   { path: "gestion-eventos", component: GestionEventosComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: 'crear-evento', component: CrearEventoComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear evento
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
    { path: 'carrito', component: CarritoComponent },  // Ruta para el carrito de compras
    { path: 'crear-cupon', component: CrearCuponComponent },  // Ruta para crear cupones
@@ -29,7 +31,12 @@ export const routes: Routes = [
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña
-   { path: 'historial-compras', component: HistorialComprasComponent },  // Ruta para recuperar contraseña
-   
+   { path: 'historial-compras', component: HistorialComprasComponent, },  // Ruta para historial contraseña
+   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+   { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
+   { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: 'panel-admin', component: PanelAdminComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: "historial-compras", component: HistorialComprasComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
    { path: "**", pathMatch: "full", redirectTo: "" }  // Redirección a la página de inicio para rutas no encontradas
 ];

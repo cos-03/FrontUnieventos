@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { EventoDTO } from '../dto/evento-dto';
+import{PublicoService} from '../servicios/publico.service';
+import { AdministradorService } from './administrador.service';
+import { MensajeDTO } from '../dto/mensaje-dto';
 
 
 @Injectable({
@@ -11,9 +14,10 @@ export class EventosService {
  eventos:EventoDTO [];
 
 
- constructor() {
+ constructor(private publicoService: PublicoService, private administradorService: AdministradorService) {
    this.eventos = [];
-   this.crearEventosPrueba();
+   //this.crearEventosPrueba();
+   this.crearEventosApi();
  }
 
 
@@ -42,6 +46,16 @@ export class EventosService {
    if(indice != -1){
      this.eventos[indice] = editarEventoDTO;
    }
+ }
+ public crearEventosApi(){
+  this.publicoService.listarEventos().subscribe((mensajeDTO:MensajeDTO) => {
+    // Suponiendo que mensajeDTO tiene una propiedad 'eventos' que es un array de EventoDTO
+    const eventos = mensajeDTO.respuesta as EventoDTO[];
+    
+    eventos.forEach(evento => {
+        this.eventos.push(evento);
+    });
+});
  }
  public crearEventosPrueba(){
   this.eventos.push({

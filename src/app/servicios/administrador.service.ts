@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
@@ -19,19 +19,28 @@ export class AdministradorService {
 
 
  constructor(private http: HttpClient) { }
+ private getAuthHeaders(): HttpHeaders {
+  const token = sessionStorage.getItem('AuthToken');
+  return new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+}
 
    // Método para crear un cupón
    public crearCupon(cupon: CrearCuponDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.adminURL}/crear-cupon`, cupon);
   }
 
+ //public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
+ //  return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO);
+ //}
  public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/evento/crear`, crearEventoDTO);
- }
+  return this.http.post<MensajeDTO>(`${this.adminURL}/crear-evento`, crearEventoDTO, { headers: this.getAuthHeaders() });
+}
 
 
  public actualizarEvento(editarEventoDTO: EditarEventoDTO): Observable<MensajeDTO> {
-   return this.http.put<MensajeDTO>(`${this.adminURL}/evento/editar`, editarEventoDTO);
+   return this.http.put<MensajeDTO>(`${this.adminURL}/editar-evento`, editarEventoDTO);
  }
 
 
@@ -41,7 +50,7 @@ export class AdministradorService {
 
 
  public eliminarEvento(id: string): Observable<MensajeDTO> {
-   return this.http.delete<MensajeDTO>(`${this.adminURL}/evento/eliminar/${id}`);
+   return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar-evento/${id}`);
  }
 
 
@@ -50,9 +59,12 @@ export class AdministradorService {
  }
 
 
+// public subirImagen(imagen: FormData): Observable<MensajeDTO> {
+  // return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen);
+ //}
  public subirImagen(imagen: FormData): Observable<MensajeDTO> {
-   return this.http.post<MensajeDTO>(`${this.adminURL}/imagen/subir`, imagen);
- }
+  return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen, { headers: this.getAuthHeaders() });
+}
 
 
 }

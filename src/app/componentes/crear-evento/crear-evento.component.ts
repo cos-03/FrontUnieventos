@@ -24,7 +24,8 @@ export class CrearEventoComponent {
   ciudades: string[];
   imagenPortada?: File;
   imagenLocalidades?: File;
-  adminService: any;
+  
+  //adminService: any;
 
 
 
@@ -32,8 +33,7 @@ export class CrearEventoComponent {
 
 
     const crearEventoDTO = this.crearEventoForm.value as CrearEventoDTO;
-   
-   
+
     this.adminService.crearEvento(crearEventoDTO).subscribe({
       next: (data: { respuesta: any; }) => {
         Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
@@ -52,15 +52,17 @@ export class CrearEventoComponent {
    
  
 
-constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,administradorService: AdministradorService ) {
+constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,private adminService: AdministradorService ) {
  this.crearFormulario();
  this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
  this.ciudades = ['armenia', 'cartagena', 'pereira', 'cali'];
  this.listarCiudades();
  this.listarTipos();
+
  
  
 }
+
 
 
 private crearFormulario() {
@@ -71,8 +73,10 @@ private crearFormulario() {
    direccion: ['', [Validators.required]],
    ciudad: ['', [Validators.required]],
    localidades: this.formBuilder.array([]),
-   imagenPortada: ['', [Validators.required]],
+   imagenImportada: ['', [Validators.required]],
+   fechaEvento: ['', Validators.required], // Campo de fecha
    imagenLocalidades: ['', [Validators.required]]
+   
  });
 }
 public onFileChange(event: any, tipo: string) {
@@ -87,7 +91,12 @@ get localidades(): FormArray {
   return this.crearEventoForm.get('localidades') as FormArray;
 }
 agregarLocalidad() {
-  this.localidades.push(this.formBuilder.control('', Validators.required));
+  const localidadFormGroup = this.formBuilder.group({
+    nombre: ['', Validators.required],
+    precio: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+    capacidadMaxima: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+  });
+  this.localidades.push(localidadFormGroup);
 }
 
 eliminarLocalidad(indice: number) {
@@ -119,7 +128,7 @@ public listarTipos(){
  public subirImagen(tipo:string){
   const formData = new FormData();
   const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
-  const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
+  const formControl = tipo == 'portada' ? 'imagenImportada' : 'imagenLocalidades';
  
  
   formData.append('imagen', imagen!);
