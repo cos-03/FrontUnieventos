@@ -73,8 +73,10 @@ private crearFormulario() {
    direccion: ['', [Validators.required]],
    ciudad: ['', [Validators.required]],
    localidades: this.formBuilder.array([]),
-   imagenPortada: ['', [Validators.required]],
+   imagenImportada: ['', [Validators.required]],
+   fechaEvento: ['', Validators.required], // Campo de fecha
    imagenLocalidades: ['', [Validators.required]]
+   
  });
 }
 public onFileChange(event: any, tipo: string) {
@@ -126,7 +128,7 @@ public listarTipos(){
  public subirImagen(tipo:string){
   const formData = new FormData();
   const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
-  const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
+  const formControl = tipo == 'portada' ? 'imagenImportada' : 'imagenLocalidades';
  
  
   formData.append('imagen', imagen!);
