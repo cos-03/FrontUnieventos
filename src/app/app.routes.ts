@@ -13,6 +13,7 @@ import { RecuperarContraseniaComponent } from './componentes/recuperar-contrasen
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
 import { HistorialComprasComponent } from './historial-compras/historial-compras.component';
 import { ValidarCodigoComponent } from './componentes/validar-codigo/validar-codigo.component';
+import { CambiarContraseniaOlvidadaComponent } from './componentes/cambiar-contrasenia-olvidada/cambiar-contrasenia-olvidada.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
@@ -29,5 +30,6 @@ export const routes: Routes = [
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña
    { path: 'historial-compras', component: HistorialComprasComponent },  // Ruta para recuperar contraseña
    { path: 'validar-codigo', component: ValidarCodigoComponent }, // Ruta para validar codigo de recuperacion de contraseña
+   { path: 'cambiar-contrasenia-olvidada', component: CambiarContraseniaOlvidadaComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }  // Redirección a la página de inicio para rutas no encontradas
 ];
