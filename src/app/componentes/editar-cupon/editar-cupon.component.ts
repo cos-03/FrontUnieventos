@@ -28,6 +28,7 @@ export class EditarCuponComponent implements OnInit {
   }
   private crearFormulario() {
     this.crearCuponForm = this.formBuilder.group({
+      id:['', [Validators.required]],
       codigo: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
@@ -65,7 +66,7 @@ this.cupon.tipo === 'MULTIPLE'
 
           // Llenar el formulario con los datos del cupón
           this.crearCuponForm.patchValue({
-          
+          id: this.cupon.id,
           codigo: this.cupon.codigo,
           nombre: this.cupon.nombre,
           tipo: tipo, // Convertir a string
