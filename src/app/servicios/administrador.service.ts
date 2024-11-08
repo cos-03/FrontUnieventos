@@ -26,9 +26,33 @@ export class AdministradorService {
   });
 }
 
-   // Método para crear un cupón
-   public crearCupon(cupon: CrearCuponDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.adminURL}/crear-cupon`, cupon);
+  // Métodos de Cupon
+  public crearCupon(cuponDTO: CrearCuponDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.adminURL}/crear-cupon`, cuponDTO, { headers: this.getAuthHeaders() });
+  }
+
+  public actualizarCupon(cuponDTO: EditarCuponDTO): Observable<MensajeDTO> {
+    return this.http.put<MensajeDTO>(`${this.adminURL}/actualizar-cupon`, cuponDTO, { headers: this.getAuthHeaders() });
+  }
+
+  public eliminarCupon(id: string): Observable<MensajeDTO> {
+    return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar-cupon/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  public listarCuponesPorExpirar(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.adminURL}/listar-cupones-por-expirar-cupon`, { headers: this.getAuthHeaders() });
+  }
+
+  public listarCuponesActivos(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.adminURL}/listar-cupones-activos-cupon`, { headers: this.getAuthHeaders() });
+  }
+
+  public listarCupones(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.adminURL}/listar-cupones`, { headers: this.getAuthHeaders() });
+  }
+
+  public obtenerInformacionCupon(id: string): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.adminURL}/obtener-informacion-cupon/${id}`, { headers: this.getAuthHeaders() });
   }
 
  //public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
@@ -64,6 +88,9 @@ export class AdministradorService {
  //}
  public subirImagen(imagen: FormData): Observable<MensajeDTO> {
   return this.http.post<MensajeDTO>(`${this.adminURL}/subir`, imagen, { headers: this.getAuthHeaders() });
+}
+public eliminarImagen(idImagen: string): Observable<MensajeDTO> {
+  return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar?idImagen=${idImagen}`, { headers: this.getAuthHeaders() });
 }
 
 

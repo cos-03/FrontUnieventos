@@ -1,4 +1,5 @@
 export interface EditarCuponDTO {
+    id:string,
     nombre: String ,
     descuento: number,
     fechaVencimiento: Date ,

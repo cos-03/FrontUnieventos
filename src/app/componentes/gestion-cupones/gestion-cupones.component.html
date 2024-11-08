@@ -8,9 +8,10 @@
       <div class="card-body p-5">
         <!-- Botones de acción -->
         <div class="mb-3">
-          <button type="button" class="btn btn-success me-2" (click)="crearCupon()">
-            <i class="fa-solid fa-plus me-1"></i> Crear
-          </button>
+          <button type="button" routerLink="/crear-cupon" class="btn btn-success me-2">
+            <i class="fa-solid fa-plus me-1"></i> Crear</button>
+
+          
           <button
             type="button"
             class="btn btn-danger"
@@ -48,7 +49,7 @@
                   {{ cupon.estado }}
                 </td>
                 <td class="px-4 py-2">
-                  <button class="btn btn-sm btn-primary me-2" (click)="editarCupon(cupon)">Editar</button>
+                  <a [routerLink]="['/editar-cupon', cupon.codigo]" class="text-blue-600 hover:underline">Editar</a>
                 </td>
               </tr>
             </tbody>

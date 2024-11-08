@@ -1,43 +1,46 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { InformacionCuponDTO } from '../../dto/cupon/informacion-cupon-dto';
+import { AdministradorService } from '../../servicios/administrador.service';
+
 
 import Swal from 'sweetalert2';
 
-interface Cupon {
-  codigo: string;
-  nombre: string;
-  descuento: number;
-  fechaVencimiento: string;
-  tipo: string;
-  estado: string;
-}
+
 
 @Component({
   selector: 'app-gestion-cupones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './gestion-cupones.component.html',
   styleUrl: './gestion-cupones.component.css'
 })
 export class GestionCuponesComponent {
-  cupones: Cupon[] = [
-    { codigo: 'CUPO001', nombre: 'Descuento 20%', descuento: 20, fechaVencimiento: '31/12/2024', tipo: 'Único', estado: 'Activo' },
-    { codigo: 'CUPO002', nombre: 'Descuento 10%', descuento: 10, fechaVencimiento: '15/11/2024', tipo: 'Recurrente', estado: 'Activo' },
-    { codigo: 'CUPO003', nombre: 'Descuento 5%', descuento: 5, fechaVencimiento: '01/10/2024', tipo: 'Único', estado: 'Inactivo' },
-  ];
 
-  cuponesSeleccionados: Cupon[] = [];
+  cupones!: InformacionCuponDTO[] ;
+
+  cuponesSeleccionados: InformacionCuponDTO[] = [];
   textoBtnDesactivar: string = '';
+  //private formBuilder: FormBuilder,private publicoService: PublicoService,
+  constructor(private adminService: AdministradorService){
+    this.listarCupones();
 
-  crearCupon() {
-    Swal.fire('Crear Cupón', 'Funcionalidad para crear un nuevo cupón.', 'info');
+  }
+  listarCupones(){
+    this.adminService.listarCupones().subscribe({
+      next: (data) => {
+        this.cupones = data.respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
-  editarCupon(cupon: Cupon) {
-    Swal.fire('Editar Cupón', `Editando cupón: ${cupon.codigo}`, 'info');
-  }
+  
 
-  seleccionarCupon(cupon: Cupon, estado: boolean) {
+  seleccionarCupon(cupon: InformacionCuponDTO, estado: boolean) {
     if (estado) {
       this.cuponesSeleccionados.push(cupon);
     } else {
@@ -71,14 +74,32 @@ export class GestionCuponesComponent {
   }
 
   desactivarCupones() {
-    this.cuponesSeleccionados.forEach((cupon) => {
-      cupon.estado = 'Inactivo';
+   /* this.cuponesSeleccionados.forEach((cupon) => {
+      //cupon.estado = 'Inactivo';
+      this.adminService.eliminarCupon(cupon.id);
+    });*/
+    const peticiones = this.cuponesSeleccionados.map((cupon) => 
+      this.adminService.eliminarCupon(cupon.id).toPromise()
+    );
+
+    Promise.all(peticiones)
+    .then(() => {
+      // Refrescar la lista de cupones después de desactivar los seleccionados
+      this.listarCupones();
+      this.cuponesSeleccionados = [];
+      this.actualizarMensaje();
+      Swal.fire('Desactivados', 'Los cupones seleccionados han sido desactivados.', 'success');
+    })
+    .catch((error) => {
+      console.error('Error al desactivar cupones:', error);
+      Swal.fire('Error', 'Hubo un problema al desactivar los cupones.', 'error');
     });
-    this.cuponesSeleccionados = [];
-    this.actualizarMensaje();
+    //this.cuponesSeleccionados = [];
+    //this.actualizarMensaje();
+   
   }
 
-  trackById(index: number, item: Cupon) {
+  trackById(index: number, item: InformacionCuponDTO) {
     return item.codigo;
   }
 }
