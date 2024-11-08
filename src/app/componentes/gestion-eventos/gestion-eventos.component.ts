@@ -3,6 +3,8 @@ import { EventosService } from '../../servicios/eventos.service';
 import { RouterModule } from '@angular/router';
 import { EventoDTO } from '../../dto/evento-dto';
 import Swal from 'sweetalert2';
+import { AdministradorService } from '../../servicios/administrador.service';
+import { PublicoService } from '../../servicios/publico.service';
 
 
 @Component({
@@ -19,10 +21,22 @@ export class GestionEventosComponent {
   textoBtnEliminar: string;
 
 
-  constructor(public eventosService:EventosService) {
+  constructor(public eventosService:EventosService, private adminService: PublicoService) {
     this.seleccionados = [];
     this.textoBtnEliminar = "";
-    this.eventos = eventosService.listar();
+    //this.eventos = eventosService.listar();
+    this.listarEventos();
+
+  }
+  public listarEventos(){
+    this.adminService.listarEventos().subscribe({
+      next: (data) => {
+        this.eventos = data.respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
 
   }
 
