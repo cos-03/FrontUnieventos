@@ -1,39 +1,41 @@
-<form [formGroup]="carrito" (ngSubmit)="Mostrarcarrito()">    
-    
-    <div>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center text-primary">Carrito de Compras</h3>
 
-    <table class="cart-table">
-        <thead>
-            <tr>
-                <th>Nombre del Evento</th>
-                <th>Localidad</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Concierto de Música</td>
-                <td>VIP</td>
-                <td>2</td>
-                <td>$300</td>
-                <td><button class="remove-item">Eliminar</button></td>
-            </tr>
-            <tr>
-                <td>Teatro Clásico</td>
-                <td>General</td>
-                <td>4</td>
-                <td>$200</td>
-                <td><button class="remove-item">Eliminar</button></td>
-            </tr>
-            <!-- Añadir más filas según los items en el carrito -->
-        </tbody>
-    </table>
+            <div class="table-responsive">
+                <table class="table table-bordered cart-table">
+                    <thead>
+                        <tr>
+                            <!--<th>Seleccionar</th>-->
+                            <th>Nombre del Evento</th>
+                            <th>Localidad</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of itemsCarrito; trackBy: trackById">
+                            <!--<td><input type="checkbox" (change)="seleccionarItem(item, $event.target.checked)" /></td>-->
+                            <!--<td>{{ item.nombreEvento }}</td>-->
+                            <td>{{ item.idEvento }}</td>
+                            <td>{{ item.nombreLocalidad }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>{{ item.precioUnitario | currency: 'USD' }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarItem(item)">
+                                    <i class="fa-solid fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="cart-actions">
-        <a href="#" class="cart-button">Proceder al Pago</a>
+            <div class="text-end mt-3">
+                <button type="button" class="btn btn-primary" (click)="mostrarCarrito()">Proceder al Pago</button>
+            </div>
+        </div>
     </div>
 </div>
-
-</form>

@@ -1,35 +1,82 @@
 import { Component } from '@angular/core';
-import { AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';  // Importa CommonModule
+import { CommonModule } from '@angular/common';
+import { DetalleCarritoDTO } from '../../dto/carrito/detalleCarrito-dto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule],
   templateUrl: './carrito.component.html',
-  styleUrl: './carrito.component.css'
+  styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent {
-  ///muchachoss recordar que los datos estan quemados en la view cambiar esto cuando se una al backend 
-  carrito!: FormGroup;  // FormGroup para el carrito
+  // Lista de items del carrito
+  itemsCarrito: DetalleCarritoDTO[] = [
+    { idDetalleCarrito: '1', idEvento: 'E1', nombreLocalidad: 'VIP', cantidad: 2, precioUnitario: 300 },
+    { idDetalleCarrito: '2', idEvento: 'E2', nombreLocalidad: 'General', cantidad: 4, precioUnitario: 200 }
+  ];
 
-  constructor(private formBuilder: FormBuilder) {
-    this.inicializarFormulario();
+  // Items seleccionados en el carrito
+  itemsSeleccionados: DetalleCarritoDTO[] = [];
+  textoBtnEliminar: string = '';
+
+  constructor() {
+    this.actualizarMensaje();
   }
 
-  // Método para inicializar el formulario
-  inicializarFormulario() {
-    this.carrito = this.formBuilder.group({
-      items: this.formBuilder.array([])  // Puedes añadir más controles aquí según los campos necesarios
+  // Método para seleccionar un item del carrito
+  seleccionarItem(item: DetalleCarritoDTO, estado: boolean) {
+    if (estado) {
+      this.itemsSeleccionados.push(item);
+    } else {
+      const index = this.itemsSeleccionados.indexOf(item);
+      if (index !== -1) {
+        this.itemsSeleccionados.splice(index, 1);
+      }
+    }
+    this.actualizarMensaje();
+  }
+
+  // Actualiza el texto del botón de eliminar según la cantidad de elementos seleccionados
+  actualizarMensaje() {
+    const cantidad = this.itemsSeleccionados.length;
+    this.textoBtnEliminar = cantidad === 1 ? '1 elemento' : `${cantidad} elementos`;
+  }
+
+  // Confirma la eliminación de los items seleccionados
+  confirmarEliminacion() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará los items seleccionados del carrito.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eliminarItems();
+        Swal.fire('Eliminados', 'Los items seleccionados han sido eliminados del carrito.', 'success');
+      }
     });
   }
+  
+  eliminarItem(item:DetalleCarritoDTO){
 
-  // Método que se llama al hacer submit
-  public Mostrarcarrito() {
-    if (this.carrito) {
-      console.log(this.carrito.value);  // Asegúrate de que el formulario esté inicializado
-    } else {
-      console.error('Formulario no inicializado');
-    }
+  }
+  // Método para eliminar los items seleccionados
+  eliminarItems() {
+    this.itemsCarrito = this.itemsCarrito.filter(item => !this.itemsSeleccionados.includes(item));
+    this.itemsSeleccionados = [];
+    this.actualizarMensaje();
+  }
+
+  // Método para mostrar el contenido del carrito (por ejemplo, al proceder al pago)
+  mostrarCarrito() {
+    console.log(this.itemsCarrito);
+  }
+
+  trackById(index: number, item: DetalleCarritoDTO) {
+    return item.idDetalleCarrito;
   }
 }
