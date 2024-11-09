@@ -1,8 +1,16 @@
+
 export interface EditarEventoDTO {
-    cedula: String ,
+    id: String,
     nombre: String ,
-    telefono: String ,
-    direccion: String ,
-    correo: String ,
-    password: String 
+    estado: String ,
+    descripcion: String ,
+    imagenLocalidades: String ,
+    tipo: string ,
+    fechaEvento: Date ,
+    ciudad: String ,
+    imagenImportada:String 
 }
+        
+        
+         
+        

@@ -79,8 +79,10 @@ export class AdministradorService {
 
 
  public listarEventosAdmin(): Observable<MensajeDTO> {
-   return this.http.get<MensajeDTO>(`${this.adminURL}/evento/listar-todos-eventos`,  { headers: this.getAuthHeaders() });
+   return this.http.get<MensajeDTO>(`${this.adminURL}/listar-todos-eventos-admin`,  { headers: this.getAuthHeaders() });
  }
+
+ 
 
 
 // public subirImagen(imagen: FormData): Observable<MensajeDTO> {
