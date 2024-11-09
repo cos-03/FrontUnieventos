@@ -18,13 +18,15 @@ import { LoginGuard } from './guards/permiso.service';
 import { RolesGuard } from './guards/roles.service';
 import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.component';
 import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
+import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
+import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cuenta.component';
 
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
   // { path: 'login', component: LoginComponent },  // Ruta para login
   // { path: 'registro', component: RegistroComponent },  // Ruta para registro
-  { path: 'confirmar-orden', component: ConfirmarOrdenComponent },
+   { path: 'confirmar-orden', component: ConfirmarOrdenComponent },
    { path: "gestion-eventos", component: GestionEventosComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'crear-evento', component: CrearEventoComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear evento
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
@@ -33,6 +35,8 @@ export const routes: Routes = [
    { path: 'editar-cupon/:id', component: EditarCuponComponent,   canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] }  },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'editar-evento/:id', component: EditarEventoComponent ,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent ,canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+   { path: 'obtener-info-cuenta/:id', component: ObtenerCuentaComponent  },
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña

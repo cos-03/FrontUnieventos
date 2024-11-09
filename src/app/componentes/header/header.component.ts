@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TokenService } from '../../servicios/token.service';
+import { EditarCuentaDTO } from '../../dto/editar-cuenta-dto';
 
 
 @Component({
@@ -14,12 +15,15 @@ export class HeaderComponent {
  title = 'Unieventos';
  isLogged = false;
  correo: string = "";
+ IdCuenta: string = "";
+
 
 
  constructor(private tokenService: TokenService) {
    this.isLogged = this.tokenService.isLogged();
    if (this.isLogged) {
      this.correo = this.tokenService.getCorreo();
+     this.IdCuenta = this.tokenService.getIDCuenta();
    }
  }
 
@@ -27,6 +31,7 @@ export class HeaderComponent {
  public logout() {
    this.tokenService.logout();
  }
+
 
 
 }

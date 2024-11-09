@@ -9,7 +9,7 @@ export interface EditarEventoDTO {
     fechaEvento: Date ,
     ciudad: String ,
     localidades: LocalidadDTO[] ,
-    imagenImportada:String 
+    imagenImportada :String 
 
    
 }
