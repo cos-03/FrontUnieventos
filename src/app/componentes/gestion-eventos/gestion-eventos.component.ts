@@ -41,7 +41,7 @@ export class GestionEventosComponent {
   }
 
  ngOnInit(): void {
-  this.eventos = this.eventosService.listar(); // Aquí llamas el método listar
+  this.listarEventos(); // Aquí llamas el método listar
 }
  public seleccionar(evento: EventoDTO, estado: boolean) {
 
