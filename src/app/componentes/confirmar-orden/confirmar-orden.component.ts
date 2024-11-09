@@ -147,17 +147,25 @@ export class ConfirmarOrdenComponent implements OnInit {
     }
   
 
-  // Método para convertir los items del carrito a DetalleOrdenDTO
-  private convertirItemsACrearOrden(items: DetalleCarritoDTO[]): DetalleOrdenDTO[] {
-    return items.map(item => ({
-      idDetalleOrden: item.idDetalleCarrito,
-      idEvento: item.idEvento,
-      precio: item.precioUnitario,
-      nomreLocalidad: item.nombreLocalidad,
-      cantidad: item.cantidad
-    }));
-  }
-
+    private convertirItemsACrearOrden(items: DetalleCarritoDTO[]): DetalleOrdenDTO[] {
+      const detallesOrden: DetalleOrdenDTO[] = [];
+    
+      for (let item of items) {
+        const detalleOrden: DetalleOrdenDTO = {
+          idDetalleOrden: item.idDetalleCarrito,
+          idEvento: item.idEvento,
+          precio: this.preciosItem.get(item.idEvento) ?? item.precioUnitario,
+          nombreLocalidad: item.nombreLocalidad,
+          cantidad: item.cantidad
+        };
+    
+        //console.log(detalleOrden.nombreLocalidad,detalleOrden.idEvento)
+        detallesOrden.push(detalleOrden);
+      }
+    
+      return detallesOrden;
+    }
+    
 
 
   // Método para calcular el total final después de aplicar el descuento
@@ -166,19 +174,34 @@ export class ConfirmarOrdenComponent implements OnInit {
   }
 
   // Método para crear la orden
-  crearOrden() {
+ public crearOrden() {
+ 
     const idCliente = this.tokenService.getIDCuenta(); // Obteniendo el ID del cliente desde el token
     this.orden = {
       idCliente: idCliente,
-      fechaVencimiento: new Date(), // Puedes ajustar la fecha según lo necesites
+      //fechaVencimiento: new Date(), // Puedes ajustar la fecha según lo necesites
       codigoPasarela: 'CODIGO_PASARELA', // Reemplaza con el código de la pasarela de pago si es necesario
-      total: this.totalFinal,
+      total: Number(this.obtenerValorFinal()),
       items: this.detallesOrden,
-      idCupon: this.codigoCupon || ''
+      idCupon: this.codigoCupon || 'no hay'
     };
 
-    this.clienteService.crearOrden(this.orden);
-   // console.log("Orden creada:", this.orden);
+    this.clienteService.crearOrden(this.orden).subscribe({
+      next: (respuesta: MensajeDTO) => {
+        if (!respuesta.error) {
+          alert(respuesta.respuesta); // Muestra mensaje de éxito
+         // this.obtenerCupon();
+          
+        } else {
+          alert(respuesta.error); // Muestra mensaje de error
+        }
+      },
+      error: (error) => {
+        alert('Ocurrió un error al redimir el cupón'); // Manejo de error en caso de fallo de la solicitud
+        console.error(error);
+      }
+    });
+    console.log("Orden creada:", this.orden);
     // Aquí puedes llamar al servicio para enviar la orden al backend
   }
     // Método para aplicar el cupón  this.cuponInfo = this.clienteService.obtenerInformacionCupon(this.codigoCupon);
