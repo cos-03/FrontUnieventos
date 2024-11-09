@@ -64,17 +64,17 @@ export class AdministradorService {
 
 
  public actualizarEvento(editarEventoDTO: EditarEventoDTO): Observable<MensajeDTO> {
-   return this.http.put<MensajeDTO>(`${this.adminURL}/editar-evento`, editarEventoDTO);
+   return this.http.put<MensajeDTO>(`${this.adminURL}/editar-evento`, editarEventoDTO, { headers: this.getAuthHeaders() });
  }
-
+ 
 
  public obtenerEvento(id: string): Observable<MensajeDTO> {
-   return this.http.get<MensajeDTO>(`${this.adminURL}/evento/obtener/${id}`);
+   return this.http.get<MensajeDTO>(`${this.adminURL}/obtener-evento/${id}`, { headers: this.getAuthHeaders() });
  }
 
 
  public eliminarEvento(id: string): Observable<MensajeDTO> {
-   return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar-evento/${id}`);
+   return this.http.delete<MensajeDTO>(`${this.adminURL}/eliminar-evento/${id}`, { headers: this.getAuthHeaders() });
  }
 
 

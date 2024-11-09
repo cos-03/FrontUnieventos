@@ -1,4 +1,4 @@
-<form [formGroup]="editarEventoForm" class="container mt-4">
+<form [formGroup]="crearEventoForm" (ngSubmit)="editarEvento()" class="container mt-4">
       <!-- Campo ID (Oculto) -->
 <div class="mb-3" style="display: none;">
     <label class="form-label">ID:</label>
@@ -74,7 +74,7 @@
         <div class="d-flex gap-2">
             <input type="file" (change)="onFileChange($event, 'portada')" class="form-control"/>
             <button type="button" class="btn btn-primary" (click)="subirImagen('portada')">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Subir
+                <i class="fa-solid fa-cloud-arrow-up"></i> actualizar localidad
             </button>
         </div>
     </div>
@@ -85,14 +85,14 @@
         <div class="d-flex gap-2">
             <input type="file" (change)="onFileChange($event, 'localidades')" class="form-control"/>
             <button type="button" class="btn btn-primary" (click)="subirImagen('localidades')">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Subir
+                <i class="fa-solid fa-cloud-arrow-up"></i> actualizar localidad
             </button>
         </div>
     </div>
   
     <!-- Botón Crear Evento -->
     <div class="text-center mt-4">
-        <button type="button" class="btn btn-success" (click)="editarEvento()">Crear Evento</button>
+        <button type="submit" class="btn btn-primary">Editar evento</button>
     </div>
 
 </form>

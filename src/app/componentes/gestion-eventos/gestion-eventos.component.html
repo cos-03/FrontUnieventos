@@ -63,11 +63,13 @@
                   <p>{{item.estado}}</p>
                 </td>
                 <td class="px-4 py-3">
-                  <button type="button" routerLink="/editar-evento/:id" class="btn btn-primary">Editar</button>
+                <button type="button" [routerLink]="['/editar-evento', item.id]" class="btn btn-primary">Editar</button>
                 </td>
                 <td class="px-4 py-2">
-                  <button type="button" routerLink="/detalle-evento" class="btn btn-success me-2">
-                    <i class="fa-solid fa-plus me-1"></i> Ver detalle</button>
+                  
+                    <button type="button" [routerLink]="['/detalle-evento', item.id]" class="btn btn-primary">Ver detalle</button>
+
+                   
                 </td>
               </tr>
             }
