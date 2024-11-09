@@ -1,4 +1,10 @@
-<form [formGroup]="crearCuponForm" (ngSubmit)="crearCupon()" class="container mt-4">
+<form [formGroup]="crearCuponForm" (ngSubmit)="editarCupon()" class="container mt-4">
+
+    <!-- Campo ID (Oculto) -->
+<div class="mb-3" style="display: none;">
+    <label class="form-label">ID:</label>
+    <input type="text" class="form-control" formControlName="id" placeholder="ID del cupón" />
+</div>
 
     <!-- Campo Código -->
     <div class="mb-3">
@@ -47,7 +53,7 @@
 
     <!-- Botón Crear Cupón -->
     <div class="text-center">
-        <button type="submit" class="btn btn-primary">Crear Cupón</button>
+        <button type="submit" class="btn btn-primary">Editar Cupón</button>
     </div>
 
 </form>

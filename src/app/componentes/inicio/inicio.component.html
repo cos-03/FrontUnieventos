@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEventos - Inicio</title>
+    <!-- Enlace a Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* Personaliza el color de fondo de la navbar */
+        .navbar-custom {
+            background-color: #6469ff;
+        }
+
+        /* Carrito de compras */
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-icon .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        /* Sección de eventos */
+        .event-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Carrusel -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Bienvenido a UniEventos</h5>
+                    <p>Descubre y reserva tus eventos favoritos aquí.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Eventos de Música</h5>
+                    <p>Disfruta de conciertos y festivales en vivo.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Teatro y Cultura</h5>
+                    <p>Explora eventos culturales para toda la familia.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="container text-center my-5">
+        <h1>Reserva tus entradas <br> en cualquier lugar, todo en un <span class="text-primary">solo lugar</span></h1>
+
+        <!-- Formulario de búsqueda -->
+        <div class="form d-flex justify-content-center mt-4">
+            <select class="form-select w-auto me-2">
+                <option>Concierto</option>
+                <!-- Más opciones de eventos -->
+            </select>
+            <input type="date" class="form-control w-auto me-2" value="2024-12-23">
+            <select class="form-select w-auto me-2">
+                <option>Armenia</option>
+                <!-- Más opciones de ubicaciones -->
+            </select>
+            <button class="btn btn-primary">Buscar entradas &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Sección de eventos próximos -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="event-card p-4 text-center">
+                    <h3 class="text-primary">Concierto Rock Fest</h3>
+                    <p>Ubicación: Bogotá</p>
+                    <p>Fecha: 15/10/2024</p>
+                    <button class="btn btn-primary">Comprar entradas</button>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="event-card p-4 text-center">
+                    <h3 class="text-primary">Feria del Libro</h3>
+                    <p>Ubicación: Medellín</p>
+                    <p>Fecha: 22/10/2024</p>
+                    <button class="btn btn-primary">Comprar entradas</button>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="event-card p-4 text-center">
+                    <h3 class="text-primary">Festival de Cine</h3>
+                    <p>Ubicación: Cali</p>
+                    <p>Fecha: 30/10/2024</p>
+                    <button class="btn btn-primary">Comprar entradas</button>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="event-card p-4 text-center">
+                    <h3 class="text-primary">Concierto de Jazz</h3>
+                    <p>Ubicación: Cartagena</p>
+                    <p>Fecha: 05/11/2024</p>
+                    <button class="btn btn-primary">Comprar entradas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
