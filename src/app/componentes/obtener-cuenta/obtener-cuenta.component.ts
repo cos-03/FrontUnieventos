@@ -23,6 +23,7 @@ export class ObtenerCuentaComponent implements OnInit {
   editarCuentaForm!: FormGroup<any>;
   cuenta!: InformacionCuentaDTO;
   codigoCuenta!: string;
+  IdCuenta: string = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +32,7 @@ export class ObtenerCuentaComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.crearFormulario();
+    
 
   }
 

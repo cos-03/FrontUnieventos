@@ -4,7 +4,10 @@ import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFo
 import { AuthService } from '../../servicios/auth.service';
 import Swal from 'sweetalert2';
 import { CrearCuentaDTO } from '../../dto/crear-cuenta-dto';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { EditarCuentaDTO } from '../../dto/editar-cuenta-dto';
+import { AdministradorService } from '../../servicios/administrador.service';
+import { PublicoService } from '../../servicios/publico.service';
 @Component({
   selector: 'app-editar-cuenta',
   standalone: true,
@@ -13,55 +16,36 @@ import { RouterModule } from '@angular/router';
   styleUrl: './editar-cuenta.component.css'
 })
 export class EditarCuentaComponent {
+  codigoCuenta!: string;
+  cuenta !: EditarCuentaDTO ;
+  cuponEditado!: EditarCuentaDTO;
 
+ editarCuentaForm!: FormGroup;
 
- registroForm!: FormGroup;
-
- constructor(private formBuilder: FormBuilder, private authService: AuthService) { 
+ constructor( private formBuilder: FormBuilder,private PublicoService: PublicoService,private route: ActivatedRoute){
+  
   this.crearFormulario();
+  
+
 }
 
  private crearFormulario() {
-  this.registroForm = this.formBuilder.group(
+  this.editarCuentaForm = this.formBuilder.group(
     {
-    cedula: ['', [Validators.required]],
+    id:['', [Validators.required]],
+    cedula: [''],
     nombre: ['', [Validators.required]],
-    correo: ['', [Validators.required, Validators.email]],
+    correo: [''],
     direccion: ['', [Validators.required]],
     telefono: ['', [Validators.required, Validators.maxLength(10)]],
-    password: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(7)]],
-    confirmaPassword: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(7)]] 
+    
 
   },
   { validators: this.passwordsMatchValidator } as AbstractControlOptions
 );
 }
 
-public registrar() {
-  const crearCuenta = this.registroForm.value as CrearCuentaDTO;
- 
- 
-  this.authService.crearCuenta(crearCuenta).subscribe({
-    next: (data) => {
-      Swal.fire({
-        title: 'Cuenta creada',
-        text: 'La cuenta se ha creado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      })
-    },
-    error: (error) => {
-      Swal.fire({
-        title: 'Error',
-        text: error.error.respuesta,
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      })
-    }
-  });
- 
- 
- }
+
  
  
 
@@ -74,8 +58,75 @@ passwordsMatchValidator(formGroup: FormGroup) {
   return password == confirmaPassword ? null : { passwordsMismatch: true };
  }
  
+//cupon////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+public obtenerCuenta() {
+  // console.log("cupon", String(this.cupon.tipo) );
+   this.PublicoService.obtenerCuenta(this.codigoCuenta).subscribe({
+     next: (data) => {
+       // Verifica que la respuesta tenga el formato correcto antes de continuar
+       if (data && data.respuesta) {
+         this.cuenta = data.respuesta;
+ 
+         // Asegúrate de que la fecha esté en formato yyyy-MM-dd
+         // Asegúrate de que la fecha esté en formato yyyy-MM-dd
+
+         // Llenar el formulario con los datos del cupón
+         this.editarCuentaForm.patchValue({
+         id: this.cuenta.id,
+         //cedula: this.cuenta.cedula,
+         nombre: this.cuenta.nombre,
+         //correo: this.cuenta.correo,
+         direccion: this.cuenta.direccion,
+         telefono: this.cuenta.telefono
+         });
+       } else {
+         console.error('La respuesta no tiene el formato esperado:', data);
+         Swal.fire('¡Error!', 'No se pudo cargar el cupón.', 'error');
+       }
+     },
+     error: (error) => {
+       console.error('Error al obtener los datos del cupón:', error);
+       Swal.fire('¡Error!', 'No se pudo cargar el cupón.', 'error');
+     },
+   });
+ }
+
+
+
+ngOnInit(): void {
+  // Obtener el parámetro 'codigo' de la URL
+  this.route.paramMap.subscribe(params => {
+    this.codigoCuenta = params.get('id') || '';
+    if (this.codigoCuenta) {
+      this.obtenerCuenta();
+      
+    } else {
+      console.error("Código de cupón no encontrado en la URL");
+    }
+    console.log('Código del cupón:', this.codigoCuenta);
+    // Aquí puedes llamar un servicio para cargar los detalles del cupón usando el 'codigoCupon'
+  });
+}
+public  editarCuenta(): void {
+ 
+    if (this.editarCuentaForm.valid) {
+      const cuentaData = this.editarCuentaForm.value;
+      this.PublicoService.actualizarCuenta(cuentaData).subscribe({
+        next: (data) => {
+          Swal.fire('¡Éxito!', 'Se ha actualizado la cuenta.', 'success');
+          this.editarCuentaForm.reset(); // Limpiar el formulario tras actualizar la cuenta
+        },
+        error: (error) => {
+          Swal.fire('¡Error!', 'Ocurrió un error al actualizar la cuenta.', 'error');
+        }
+      });
+    } else {
+      Swal.fire('¡Error!', 'Por favor, complete todos los campos requeridos.', 'error');
+    }
+  }
 
 
 
