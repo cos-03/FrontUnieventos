@@ -37,7 +37,7 @@
         </div>
   
         <div class="text-end mt-3">
-          <button type="button" class="btn btn-primary" (click)="mostrarCarrito()">Proceder al Pago</button>
+          <button type="button" class="btn btn-primary" [routerLink]="['/confirmar-orden', carrito.id]">Proceder al Pago</button>
         </div>
       </div>
     </div>

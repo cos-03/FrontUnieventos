@@ -8,11 +8,12 @@ import { TokenService } from '../../servicios/token.service';
 import { CarritoDTO } from '../../dto/carrito/carrito-dto';
 import { PublicoService } from '../../servicios/publico.service';
 import { FormsModule } from '@angular/forms'; 
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })
@@ -56,7 +57,8 @@ export class CarritoComponent {
   }
   actualizarCantidad(item: DetalleCarritoDTO) {
     this.obtenerPrecio(item); // Recalcula el precio para el ítem
-    console.log('Ítem actualizado:', item);
+    this.clienteService.editarItemCarrito(this.carrito.id, item);
+    //console.log('Ítem actualizado:', item);
   }
   
 
@@ -138,6 +140,7 @@ export class CarritoComponent {
 
   eliminarItem(item: DetalleCarritoDTO) {
     // Implementar lógica para eliminar un solo item si es necesario
+    this.clienteService.eliminarItemCarrito(this.carrito.id, item );
   }
 
   eliminarItems() {

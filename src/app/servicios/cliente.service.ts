@@ -28,6 +28,13 @@ export class ClienteService {
 
   // Métodos de Carrito en el servicio frontend
 
+   // Función para redimir el cupón
+   public redimirCupon(codigo: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.apiURL}/redimir-cupon/${codigo}`, null, { headers: this.getAuthHeaders() });
+  }
+  public obtenerInformacionCupon(id: string): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-informacion-cupon/${id}`, { headers: this.getAuthHeaders() });
+  }
 // Agregar item al carrito
 public agregarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<MensajeDTO> {
   return this.http.post<MensajeDTO>(`${this.apiURL}/agregarItem-carrito/${id}`, item, { headers: this.getAuthHeaders() });
@@ -39,13 +46,16 @@ public editarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<Mensaj
 }
 
 // Eliminar item del carrito
-public eliminarItemCarrito(id: string, idDetalleCarrito: string): Observable<MensajeDTO> {
+public eliminarItemCarrito(id: string, idDetalleCarrito:  DetalleCarritoDTO): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.apiURL}/eliminarItem-carrito/${id}/${idDetalleCarrito}`, null, { headers: this.getAuthHeaders() });
 }
 
 // Obtener carrito
 public traerCarritoCliente(id: string): Observable<MensajeDTO> {
   return this.http.get<MensajeDTO>(`${this.apiURL}/traerCarrito-carrito/${id}`, { headers: this.getAuthHeaders() });
+}
+public traerCarritoId(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/traerCarrito-carritoId/${id}`, { headers: this.getAuthHeaders() });
 }
 
   // Métodos para Orden
