@@ -1,31 +1,108 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetalleCarritoDTO } from '../../dto/carrito/detalleCarrito-dto';
+import { EventoDTO } from '../../dto/evento-dto';
 import Swal from 'sweetalert2';
+import { ClienteService } from '../../servicios/cliente.service';
+import { TokenService } from '../../servicios/token.service';
+import { CarritoDTO } from '../../dto/carrito/carrito-dto';
+import { PublicoService } from '../../servicios/publico.service';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent {
-  // Lista de items del carrito
-  itemsCarrito: DetalleCarritoDTO[] = [
-    { idDetalleCarrito: '1', idEvento: 'E1', nombreLocalidad: 'VIP', cantidad: 2, precioUnitario: 300 },
-    { idDetalleCarrito: '2', idEvento: 'E2', nombreLocalidad: 'General', cantidad: 4, precioUnitario: 200 }
-  ];
+  itemsCarrito!: DetalleCarritoDTO[];
+  carrito!: CarritoDTO;
+  idCuenta!: any;
+  // Mapa para almacenar los nombres de los eventos por idEvento
+  nombresEventos = new Map<string, string>();
+  preciosItem = new Map<string, number>();
 
-  // Items seleccionados en el carrito
+  
   itemsSeleccionados: DetalleCarritoDTO[] = [];
   textoBtnEliminar: string = '';
 
-  constructor() {
+  constructor(
+    private clienteService: ClienteService,
+    private tokenService: TokenService,
+    private publicoService: PublicoService
+  ) {
     this.actualizarMensaje();
+    this.obtenerCarrito();
   }
 
-  // Método para seleccionar un item del carrito
+  public obtenerCarrito() {
+    this.idCuenta = this.tokenService.getIDCuenta();
+    this.clienteService.traerCarritoCliente(this.idCuenta).subscribe({
+      next: (data) => {
+        this.carrito = data.respuesta;
+        this.itemsCarrito = this.carrito.items;
+
+        // Obtener el evento para cada item del carrito
+        this.itemsCarrito.forEach((item) => {
+          this.obtenerEvento(item.idEvento);
+        });
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+  actualizarCantidad(item: DetalleCarritoDTO) {
+    this.obtenerPrecio(item); // Recalcula el precio para el ítem
+    console.log('Ítem actualizado:', item);
+  }
+  
+
+  public obtenerPrecio(item: DetalleCarritoDTO): number {
+    // Verificar si ya tenemos el precio calculado para este ítem
+    if (this.preciosItem.has(item.idEvento)) {
+      return this.preciosItem.get(item.idEvento)! * item.cantidad;
+    }
+  
+    // Llamar al servicio para obtener el evento y su precio
+    this.publicoService.obtenerEvento(item.idEvento).subscribe({
+      next: (data) => {
+        const evento = data.respuesta as EventoDTO;
+  
+        // Encontrar la localidad correcta y su precio
+        const localidad = evento.localidades.find(loc => loc.nombre === item.nombreLocalidad);
+        if (localidad) {
+          const precioTotal = localidad.precio * item.cantidad;
+          this.preciosItem.set(item.idEvento, localidad.precio);
+          console.log(`Precio actualizado para el ítem con idEvento ${item.idEvento}:`, precioTotal);
+        }
+      },
+      error: (error) => {
+        console.error(`Error obteniendo el evento con idEvento ${item.idEvento}`, error);
+      }
+    });
+  
+    // Devolver 0 temporalmente hasta que se obtenga el precio
+    return 0;
+  }
+  
+  public obtenerEvento(idEvento: string) {
+    // Verificar si el nombre del evento ya está en el mapa para evitar solicitudes duplicadas
+    if (!this.nombresEventos.has(idEvento)) {
+      this.publicoService.obtenerEvento(idEvento).subscribe({
+        next: (data) => {
+          // Guardar el nombre del evento en el mapa
+          this.nombresEventos.set(idEvento, data.respuesta.nombre);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    }
+  }
+
   seleccionarItem(item: DetalleCarritoDTO, estado: boolean) {
     if (estado) {
       this.itemsSeleccionados.push(item);
@@ -38,13 +115,11 @@ export class CarritoComponent {
     this.actualizarMensaje();
   }
 
-  // Actualiza el texto del botón de eliminar según la cantidad de elementos seleccionados
   actualizarMensaje() {
     const cantidad = this.itemsSeleccionados.length;
     this.textoBtnEliminar = cantidad === 1 ? '1 elemento' : `${cantidad} elementos`;
   }
 
-  // Confirma la eliminación de los items seleccionados
   confirmarEliminacion() {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -60,18 +135,17 @@ export class CarritoComponent {
       }
     });
   }
-  
-  eliminarItem(item:DetalleCarritoDTO){
 
+  eliminarItem(item: DetalleCarritoDTO) {
+    // Implementar lógica para eliminar un solo item si es necesario
   }
-  // Método para eliminar los items seleccionados
+
   eliminarItems() {
     this.itemsCarrito = this.itemsCarrito.filter(item => !this.itemsSeleccionados.includes(item));
     this.itemsSeleccionados = [];
     this.actualizarMensaje();
   }
 
-  // Método para mostrar el contenido del carrito (por ejemplo, al proceder al pago)
   mostrarCarrito() {
     console.log(this.itemsCarrito);
   }

@@ -65,6 +65,7 @@ public getIDCuenta(): string {
   const token = this.getToken();
   if (token) {
     const values = this.decodePayload(token);
+    
     return values.id;
   }
   return "";

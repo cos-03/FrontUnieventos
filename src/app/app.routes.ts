@@ -23,6 +23,7 @@ export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
   // { path: 'login', component: LoginComponent },  // Ruta para login
   // { path: 'registro', component: RegistroComponent },  // Ruta para registro
+  { path: 'confirmar-orden', component: ConfirmarOrdenComponent },
    { path: "gestion-eventos", component: GestionEventosComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'crear-evento', component: CrearEventoComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear evento
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },

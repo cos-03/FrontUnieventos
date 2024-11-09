@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MensajeDTO } from '../dto/mensaje-dto';
 
 
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import{ CrearOrdenDTO } from '../dto/orden/crear-orden-dto';
 import { EditarOrdenDTO } from '../dto/orden/editar-orden-dto';
 import { InformacionOrdenDTO } from '../dto/orden/informacion-orden-dto';
+import { DetalleCarritoDTO } from '../dto/carrito/detalleCarrito-dto';
 
 
 
@@ -15,36 +16,73 @@ import { InformacionOrdenDTO } from '../dto/orden/informacion-orden-dto';
   providedIn: 'root'
 })
 export class ClienteService {
-  private authURL = "http://localhost:8082/api/cliente";
+  private apiURL = "http://localhost:8082/api/cliente";
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('AuthToken');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
   constructor(private http: HttpClient) { }
 
+  // Métodos de Carrito en el servicio frontend
+
+// Agregar item al carrito
+public agregarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/agregarItem-carrito/${id}`, item, { headers: this.getAuthHeaders() });
+}
+
+// Editar item en el carrito
+public editarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/editarItem-carrito/${id}`, item, { headers: this.getAuthHeaders() });
+}
+
+// Eliminar item del carrito
+public eliminarItemCarrito(id: string, idDetalleCarrito: string): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.apiURL}/eliminarItem-carrito/${id}/${idDetalleCarrito}`, null, { headers: this.getAuthHeaders() });
+}
+
+// Obtener carrito
+public traerCarritoCliente(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/traerCarrito-carrito/${id}`, { headers: this.getAuthHeaders() });
+}
+
   // Métodos para Orden
-  crearOrden(orden: CrearOrdenDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/crear-orden`, orden);
-  }
 
-  actualizarOrden(orden: EditarOrdenDTO): Observable<MensajeDTO> {
-    return this.http.put<MensajeDTO>(`${this.authURL}/actualizar-orden`, orden);
-  }
+// Crear Orden
+public crearOrden(orden: CrearOrdenDTO): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/crear-orden`, orden, { headers: this.getAuthHeaders() });
+}
 
-  eliminarOrden(id: string): Observable<MensajeDTO> {
-    return this.http.delete<MensajeDTO>(`${this.authURL}/eliminar-orden/${id}`);
-  }
+// Actualizar Orden
+public actualizarOrden(orden: EditarOrdenDTO): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.apiURL}/actualizar-orden`, orden, { headers: this.getAuthHeaders() });
+}
 
-  obtenerInformacionOrden(id: string): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/obtener-informacion-orden/${id}`);
-  }
+// Eliminar Orden
+public eliminarOrden(id: string): Observable<MensajeDTO> {
+  return this.http.delete<MensajeDTO>(`${this.apiURL}/eliminar-orden/${id}`, { headers: this.getAuthHeaders() });
+}
 
-  buscarOrdenesPorCliente(id: string): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/obtener-ordenes-cliente-orden/${id}`);
-  }
+// Obtener Información de Orden
+public obtenerInformacionOrden(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-informacion-orden/${id}`, { headers: this.getAuthHeaders() });
+}
 
-  buscarOrdenesPorRangoDeFechas(d1: string, d2: string): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/obtener-ordenes-rango-fecha-orden/${d1}/${d2}`);
-  }
+// Buscar Ordenes por Cliente
+public buscarOrdenesPorCliente(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-ordenes-cliente-orden/${id}`, { headers: this.getAuthHeaders() });
+}
 
-  listarTodasLasOrdenes(): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/obtener-ordenes-orden`);
-  }
+// Buscar Ordenes por Rango de Fechas
+public buscarOrdenesPorRangoDeFechas(d1: string, d2: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-ordenes-rango-fecha-orden/${d1}/${d2}`, { headers: this.getAuthHeaders() });
+}
+
+// Listar Todas las Ordenes
+public listarTodasLasOrdenes(): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-ordenes-orden`, { headers: this.getAuthHeaders() });
+}
+
 }
