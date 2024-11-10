@@ -57,6 +57,8 @@ cambiarPassword(cambiarPasswordDTO: CambiarPasswordDTO): Observable<MensajeDTO> 
 public inactivarCuenta(id: string): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.publicoURL}/eliminar-cuenta/${id}`, {});
 }
-
+public filtrareventos(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.publicoURL}/filtrar-eventos`, {});
+}
 }
 
