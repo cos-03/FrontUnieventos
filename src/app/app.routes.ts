@@ -22,6 +22,7 @@ import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta
 import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cuenta.component';
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { BoletasComponent } from './componentes/gestion-mis-boletas/gestion-mis-boletas.component';
+import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 
 export const routes: Routes = [
@@ -48,6 +49,7 @@ export const routes: Routes = [
    { path: 'historial-compras', component: HistorialComprasComponent, },  // Ruta para historial contraseña
    { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
    { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
+   { path: 'activar-cuenta', component: ActivarCuentaComponent, },
    { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },

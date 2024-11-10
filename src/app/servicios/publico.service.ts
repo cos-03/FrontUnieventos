@@ -4,6 +4,7 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
 import { EditarCuentaDTO } from '../dto/editar-cuenta-dto';
 import { CambiarPasswordDTO } from '../dto/cambiar-contrasenia-dto';
+import { ActivarCuentaDTO } from '../dto/activar-cuenta-dto';
 
 
 @Injectable({
@@ -57,6 +58,10 @@ cambiarPassword(cambiarPasswordDTO: CambiarPasswordDTO): Observable<MensajeDTO> 
 public inactivarCuenta(id: string): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.publicoURL}/eliminar-cuenta/${id}`, {});
 }
+ public activarCuenta(activarCuentaDTO: ActivarCuentaDTO): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.publicoURL}/activar-cuenta`, activarCuentaDTO);
+}
+
 
 }
 
