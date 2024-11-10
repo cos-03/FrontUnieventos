@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
+import { ActivarCuentaDTO } from '../dto/activar-cuenta-dto';
 
 
 @Injectable({
@@ -34,6 +35,10 @@ export class PublicoService {
  public obtenerEvento(id: string): Observable<MensajeDTO> {
    return this.http.get<MensajeDTO>(`${this.publicoURL}/evento/obtener/${id}`);
  }
+
+ public activarCuenta(activarCuentaDTO: ActivarCuentaDTO): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.publicoURL}/activar-cuenta`, activarCuentaDTO);
+}
 
 
 }

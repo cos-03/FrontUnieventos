@@ -17,6 +17,7 @@ import { HistorialComprasComponent } from './componentes/historial-compras/histo
 import { LoginGuard } from './guards/permiso.service';
 import { RolesGuard } from './guards/roles.service';
 import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.component';
+import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 
 export const routes: Routes = [
@@ -37,6 +38,7 @@ export const routes: Routes = [
    { path: 'historial-compras', component: HistorialComprasComponent, },  // Ruta para historial contraseña
    { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
    { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
+   { path: 'activar-cuenta', component: ActivarCuentaComponent, },
    { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'panel-admin', component: PanelAdminComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },

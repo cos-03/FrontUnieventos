@@ -1,0 +1,27 @@
+<form class="row g-3" [formGroup]="activarCtaForm" (ngSubmit)="activar()" >
+    <h4 class="mb-3"><i class="bi bi-check-circle"></i> Activar cuenta</h4>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input
+        id="email"
+        type="email"
+        class="form-control"
+        placeholder="Ingrese su email"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Código:</label>
+      <input
+        id="codigo"
+        type="text"
+        class="form-control"
+        placeholder="Ingrese el código que llegó a su correo"
+        formControlName="token"
+      />
+      <br>
+      <p>El código tiene una duración de 15 minutos</p>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Activar cuenta</button>
+  </form>
+  
