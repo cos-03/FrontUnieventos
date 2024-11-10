@@ -27,12 +27,16 @@
           }@else {
           <label class="me-3">Hola {{correo}}</label>
           
-          <button type="button" [routerLink]="['/obtener-info-cuenta', IdCuenta]" class="btn btn-primary">Ver Perfil</button>
+          <button type="button" [routerLink]="['/obtener-info-cuenta', IdCuenta]" class="btn btn-outline-secondary me-2">Ver Perfil</button>
 
-          <button type="button" (click)="logout()" class="btn btn-primary ">Logout</button>
+          <button type="button" (click)="logout()" class="btn btn-danger ">Logout</button>
           }
          </div>
+
+         
+        
+        
         
       
     </header>
-   </div>
+  </div>

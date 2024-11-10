@@ -31,7 +31,7 @@ export class PublicoService {
 
 
  public listarEventos(): Observable<MensajeDTO> {
-   return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-todos-eventos`);
+   return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-eventos-activos`);
  }
 
 
