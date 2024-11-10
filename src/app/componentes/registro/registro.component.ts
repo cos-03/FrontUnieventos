@@ -3,6 +3,7 @@ import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFo
 import { AuthService } from '../../servicios/auth.service';
 import Swal from 'sweetalert2';
 import { CrearCuentaDTO } from '../../dto/crear-cuenta-dto';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class RegistroComponent{
 
  registroForm!: FormGroup;
 
- constructor(private formBuilder: FormBuilder, private authService: AuthService) { 
+ constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { 
   this.crearFormulario();
 }
 
@@ -40,8 +41,7 @@ export class RegistroComponent{
 
 public registrar() {
   const crearCuenta = this.registroForm.value as CrearCuentaDTO;
- 
- 
+
   this.authService.crearCuenta(crearCuenta).subscribe({
     next: (data) => {
       Swal.fire({
@@ -49,7 +49,11 @@ public registrar() {
         text: 'La cuenta se ha creado correctamente',
         icon: 'success',
         confirmButtonText: 'Aceptar'
-      })
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/activar-cuenta']);
+        }
+      });
     },
     error: (error) => {
       Swal.fire({
@@ -57,7 +61,7 @@ public registrar() {
         text: error.error.respuesta,
         icon: 'error',
         confirmButtonText: 'Aceptar'
-      })
+      });
     }
   });
  

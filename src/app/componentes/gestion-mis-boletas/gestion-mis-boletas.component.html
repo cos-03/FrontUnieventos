@@ -1,0 +1,52 @@
+<div class="container mt-5">
+    <div class="card">
+      <!-- Encabezado de la tarjeta -->
+      <div class="card-header ps-5 pt-4 pb-4">
+        <h5 class="mb-0"><i class="fa-solid fa-ticket me-3"></i>Gestión de Boletas</h5>
+      </div>
+  
+      <div class="card-body p-5">
+        <!-- Barra de búsqueda -->
+        <div class="mb-3 d-flex">
+          <input
+            type="text"
+            class="form-control me-2"
+            placeholder="Ingresar id o nombre"
+            [(ngModel)]="filtroBusqueda"
+          />
+          <button class="btn btn-primary" (click)="buscarBoletas()">
+            Buscar
+          </button>
+        </div>
+  
+        <!-- Tabla de boletas -->
+        <div class="overflow-x-auto rounded-xl">
+          <table class="min-w-full bg-white border border-gray-200">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-2 text-left">Nombre Evento</th>
+                <th class="px-4 py-2 text-left">Correo</th>
+                <th class="px-4 py-2 text-left">Dueño del boleto</th>
+                <th class="px-4 py-2 text-left">Num. Boletas</th>
+                <th class="px-4 py-2 text-center">Acción</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr *ngFor="let boleta of boletasFiltradas">
+                <td class="px-4 py-2">{{ boleta.nombreEvento }}</td>
+                <td class="px-4 py-2">{{ boleta.correo }}</td>
+                <td class="px-4 py-2">{{ boleta.dueno }}</td>
+                <td class="px-4 py-2">{{ boleta.numBoletas }}</td>
+                <td class="px-4 py-2 text-center">
+                  <button class="btn btn-link text-primary" (click)="verDetalle(boleta)">
+                    Ver Detalle
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
