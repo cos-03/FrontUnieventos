@@ -10,6 +10,7 @@ import { LoginDTO } from '../dto/login-dto';
  providedIn: 'root'
 })
 export class AuthService {
+  
 
 
  private authURL = "http://localhost:8082/api/auth";

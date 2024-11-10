@@ -21,7 +21,7 @@ export class GestionEventosComponent {
   textoBtnEliminar: string;
 
 
-  constructor(public eventosService:EventosService, private adminService: PublicoService) {
+  constructor(public eventosService:EventosService, private adminService: AdministradorService) {
     this.seleccionados = [];
     this.textoBtnEliminar = "";
     //this.eventos = eventosService.listar();
@@ -29,7 +29,7 @@ export class GestionEventosComponent {
 
   }
   public listarEventos(){
-    this.adminService.listarEventos().subscribe({
+    this.adminService.listarEventosAdmin().subscribe({
       next: (data) => {
         this.eventos = data.respuesta;
       },

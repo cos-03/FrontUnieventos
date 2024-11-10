@@ -11,6 +11,8 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a routerLink="" class="nav-link px-2 link-secondary">Inicio</a></li>
         <li><a routerLink="/gestion-eventos" class="nav-link px-2">Gestión de eventos</a></li>
+        
+        
 
         <li><a routerLink="/historial-compras" class="nav-link px-2">Historial de eventos</a></li>
       </ul>
@@ -24,6 +26,9 @@
           <button type="button" routerLink="/registro" class="btn btn-primary">Registro</button>
           }@else {
           <label class="me-3">Hola {{correo}}</label>
+          
+          <button type="button" [routerLink]="['/obtener-info-cuenta', IdCuenta]" class="btn btn-primary">Ver Perfil</button>
+
           <button type="button" (click)="logout()" class="btn btn-primary ">Logout</button>
           }
          </div>

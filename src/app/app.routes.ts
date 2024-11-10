@@ -6,7 +6,7 @@ import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.co
 import { CarritoComponent } from './componentes/carrito/carrito.component';
 import { CrearCuponComponent } from './componentes/crear-cupon/crear-cupon.component';
 import { EditarCuponComponent } from './componentes/editar-cupon/editar-cupon.component';
-import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
+
 import { ConfirmarOrdenComponent } from './componentes/confirmar-orden/confirmar-orden.component';
 import { AgregarItemComponent } from './componentes/agregar-item/agregar-item.component';
 import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
@@ -17,6 +17,9 @@ import { HistorialComprasComponent } from './componentes/historial-compras/histo
 import { LoginGuard } from './guards/permiso.service';
 import { RolesGuard } from './guards/roles.service';
 import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.component';
+import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
+import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
+import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cuenta.component';
 
 
 export const routes: Routes = [
@@ -28,10 +31,12 @@ export const routes: Routes = [
    { path: 'crear-evento', component: CrearEventoComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear evento
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
    { path: 'carrito', component: CarritoComponent },  // Ruta para el carrito de compras
-   { path: 'crear-cupon', component: CrearCuponComponent },  // Ruta para crear cupones
-   { path: 'editar-cupon/:id', component: EditarCuponComponent },
+   { path: 'crear-cupon', component: CrearCuponComponent , canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear cupones
+   { path: 'editar-cupon/:id', component: EditarCuponComponent,   canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] }  },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
-   { path: 'editar-evento/:id', component: EditarEventoComponent },
+   { path: 'editar-evento/:id', component: EditarEventoComponent ,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent ,canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+   { path: 'obtener-info-cuenta/:id', component: ObtenerCuentaComponent  },
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña
