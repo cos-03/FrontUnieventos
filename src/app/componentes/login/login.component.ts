@@ -27,7 +27,7 @@ export class LoginComponent {
   private crearFormulario() {
     this.loginForm = this.formBuilder.group({
       correo: ['', [Validators.required, Validators.email]],  // Validación para email
-      password: ['', [Validators.required, Validators.minLength(6)]]  // Validación para contraseña
+      password: ['', [Validators.required, Validators.minLength(5)]]  // Validación para contraseña
     });
   }
 
