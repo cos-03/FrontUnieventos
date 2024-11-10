@@ -26,17 +26,20 @@
     <h1>Reserva tus entradas <br> en cualquier lugar, todo en un <span class="text-primary">solo lugar</span></h1>
 
     <!-- Formulario de búsqueda -->
-    <div class="form d-flex justify-content-center mt-4">
-        <select class="form-select w-auto me-2">
-            <option *ngFor="let ciudad of ciudades">{{ ciudad }}</option>
-        </select>
-        <input type="date" class="form-control w-auto me-2" value="2024-12-23">
-        <select class="form-select w-auto me-2">
-            <option *ngFor="let evento of eventos">{{ evento.nombre }}</option>
-        </select>
-        <button class="btn btn-primary">Buscar entradas &rarr;</button>
-    </div>
+<div class="form d-flex justify-content-center mt-4">
+  <select [(ngModel)]="selectedCiudad" class="form-select w-auto me-2">
+    <option value="">Seleccione una ciudad</option>
+    <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
+  </select>
+  <input type="date" [(ngModel)]="selectedFecha" class="form-control w-auto me-2">
+  <select [(ngModel)]="selectedEvento" class="form-select w-auto me-2">
+    <option value="">Seleccione un evento</option>
+    <option *ngFor="let evento of eventos" [value]="evento.nombre">{{ evento.nombre }}</option>
+  </select>
+  <button (click)="filtrarEventos()" class="btn btn-primary">Buscar entradas &rarr;</button>
 </div>
+
+
 
 <!-- Sección de eventos próximos -->
 <div class="container mt-5">
@@ -46,17 +49,17 @@
          <!-- Imagen en la parte superior de la tarjeta -->
          <img [src]="item.urlImagenPoster" class="card-img-top" alt="{{ item.nombre }}" style="object-fit: cover; height: 200px;">
 
-         <!-- Contenido de la tarjeta -->
+         
         <!-- Contenido de la tarjeta -->
         <div class="card-body">
           <p class="card-text">
-            <strong>id:</strong> {{ item.id }}<br>
+            <strong>id:    </strong> {{ item.id }}<br>
             <strong>Ciudad:</strong> {{ item.ciudad }}<br>
             <strong>Fecha:</strong> {{ item.fecha | date: 'dd/MM/yyyy' }}<br>
             <strong>Nombre:</strong> {{ item.nombre }}<br>  <!-- Asegúrate de usar el nombre correcto -->
           </p>
         </div>
-      
+      </div>
       </div>
     </div>
   </div>
