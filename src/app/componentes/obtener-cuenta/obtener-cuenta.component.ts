@@ -39,7 +39,7 @@ export class ObtenerCuentaComponent implements OnInit {
   private crearFormulario() {
     this.editarCuentaForm = this.formBuilder.group(
       {
-      id: [''],
+      //id: [''],
       cedula: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       correo: ['', [Validators.required, Validators.email]],
@@ -63,13 +63,16 @@ export class ObtenerCuentaComponent implements OnInit {
       } else {
         console.error("Código de cupón no encontrado en la URL");
       }
-      console.log('Código del cupón:', this.codigoCuenta);
+      ///console.log('Código del cupón:', this.codigoCuenta);
       // Aquí puedes llamar un servicio para cargar los detalles del cupón usando el 'codigoCupon'
     });
   }
+  public obtenerIdCuenta():String{
+      return this.codigoCuenta;
+  }
 
   editarCuenta(): void {
-    if (this.editarCuentaForm.valid) {
+    /*if (this.editarCuentaForm.valid) {
       const cuentaData = this.editarCuentaForm.value;
       this.publicoService.actualizarCuenta(cuentaData).subscribe({
         next: (data) => {
@@ -82,7 +85,7 @@ export class ObtenerCuentaComponent implements OnInit {
       });
     } else {
       Swal.fire('¡Error!', 'Por favor, complete todos los campos requeridos.', 'error');
-    }
+    }*/
   }
 
   // Validador personalizado para verificar si las contraseñas coinciden

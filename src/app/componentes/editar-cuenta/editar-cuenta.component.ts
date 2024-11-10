@@ -8,6 +8,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EditarCuentaDTO } from '../../dto/editar-cuenta-dto';
 import { AdministradorService } from '../../servicios/administrador.service';
 import { PublicoService } from '../../servicios/publico.service';
+import { InformacionCuentaDTO } from '../../dto/informacion-cuenta-dto';
 @Component({
   selector: 'app-editar-cuenta',
   standalone: true,
@@ -17,7 +18,7 @@ import { PublicoService } from '../../servicios/publico.service';
 })
 export class EditarCuentaComponent {
   codigoCuenta!: string;
-  cuenta !: EditarCuentaDTO ;
+  cuenta !: InformacionCuentaDTO ;
   cuponEditado!: EditarCuentaDTO;
 
  editarCuentaForm!: FormGroup;
@@ -33,11 +34,11 @@ export class EditarCuentaComponent {
   this.editarCuentaForm = this.formBuilder.group(
     {
     id:['', [Validators.required]],
-    cedula: [''],
-    nombre: ['', [Validators.required]],
-    correo: [''],
-    direccion: ['', [Validators.required]],
-    telefono: ['', [Validators.required, Validators.maxLength(10)]],
+    cedula: [{ value: '', disabled: true }, Validators.required],
+    nombre: ['', Validators.required],
+    correo: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+    direccion: ['', Validators.required],
+    telefono: ['', Validators.required]
     
 
   },
@@ -76,9 +77,9 @@ public obtenerCuenta() {
          // Llenar el formulario con los datos del cupón
          this.editarCuentaForm.patchValue({
          id: this.cuenta.id,
-         //cedula: this.cuenta.cedula,
+         cedula: this.cuenta.cedula,
          nombre: this.cuenta.nombre,
-         //correo: this.cuenta.correo,
+         correo: this.cuenta.correo,
          direccion: this.cuenta.direccion,
          telefono: this.cuenta.telefono
          });
@@ -106,31 +107,39 @@ ngOnInit(): void {
     } else {
       console.error("Código de cupón no encontrado en la URL");
     }
-    console.log('Código del cupón:', this.codigoCuenta);
+    //console.log('Código del cupón:', this.codigoCuenta);
     // Aquí puedes llamar un servicio para cargar los detalles del cupón usando el 'codigoCupon'
   });
 }
-public  editarCuenta(): void {
- 
-    if (this.editarCuentaForm.valid) {
-      const cuentaData = this.editarCuentaForm.value;
-      this.PublicoService.actualizarCuenta(cuentaData).subscribe({
-        next: (data) => {
-          Swal.fire('¡Éxito!', 'Se ha actualizado la cuenta.', 'success');
-          this.editarCuentaForm.reset(); // Limpiar el formulario tras actualizar la cuenta
-        },
-        error: (error) => {
-          Swal.fire('¡Error!', 'Ocurrió un error al actualizar la cuenta.', 'error');
-        }
-      });
-    } else {
-      Swal.fire('¡Error!', 'Por favor, complete todos los campos requeridos.', 'error');
-    }
-  }
+public editarCuenta(): void {
+  if (this.editarCuentaForm.valid) {
+    // Construir el objeto EditarCuentaDTO solo con los campos necesarios
+    const cuentaData: EditarCuentaDTO = {
+      id: this.editarCuentaForm.get('id')?.value,
+      nombre: this.editarCuentaForm.get('nombre')?.value,
+      telefono: this.editarCuentaForm.get('telefono')?.value,
+      direccion: this.editarCuentaForm.get('direccion')?.value // Este campo es opcional
+    };
+    console.log(cuentaData);
+
+    this.PublicoService.actualizarCuenta(cuentaData).subscribe({
+      next: (data) => {
+        Swal.fire('¡Éxito!', 'Se ha actualizado la cuenta.', 'success');
+        console.log(data);
+        //this.editarCuentaForm.reset(); // Limpiar el formulario tras actualizar la cuenta
+      },
+      error: (error) => {
+        Swal.fire('¡Error!', 'Ocurrió un error al actualizar la cuenta.', 'error');
+        console.log(error);
+
+      }
+    });
+}
 
 
 
- 
- 
+
+
+}
 }
 

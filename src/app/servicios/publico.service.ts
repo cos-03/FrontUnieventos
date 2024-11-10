@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
+import { EditarCuentaDTO } from '../dto/editar-cuenta-dto';
+import { CambiarPasswordDTO } from '../dto/cambiar-contrasenia-dto';
 
 
 @Injectable({
@@ -13,6 +15,7 @@ export class PublicoService {
 
  private publicoURL = "http://localhost:8082/api/general";
 
+ 
 
  constructor(private http: HttpClient) { }
 
@@ -39,8 +42,17 @@ export class PublicoService {
  public obtenerCuenta(id: string): Observable<MensajeDTO> {
   return this.http.get<MensajeDTO>(`${this.publicoURL}/obtener-info-cuenta/${id}`);
 }
-public actualizarCuenta(id: string): Observable<MensajeDTO> {
-  return this.http.get<MensajeDTO>(`${this.publicoURL}/editar-perfil`);
+public actualizarCuenta(editarCuentaDTO:EditarCuentaDTO): Observable<MensajeDTO> {
+   return this.http.put<MensajeDTO>(`${this.publicoURL}/editar-perfil`, editarCuentaDTO);
+}
+// Método para enviar el código de activación al correo
+enviarCodigoActivacion(correo: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.publicoURL}/enviar-codigo-password/${correo}`);
+}
+
+// Método para cambiar la contraseña
+cambiarPassword(cambiarPasswordDTO: CambiarPasswordDTO): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.publicoURL}/cambiar-password`, cambiarPasswordDTO);
 }
 
 

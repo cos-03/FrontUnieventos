@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>CAMBIAR CONTRASEÑA</h2>
+  
+    <div class="section">
+      <h3>Información</h3>
+      <label>NombreUsuario</label>
+      <input type="text" class="form-control" [(ngModel)]="nombreUsuario" disabled />
+      
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="email" disabled />
+    </div>
+  
+    <div class="section">
+      <button (click)="obtenerCodigoVerificacion()" class="btn btn-primary">Obtener Código verificación</button>
+      <input type="text" class="form-control" placeholder="Ingrese su código" [(ngModel)]="codigoVerificacion" />
+    </div>
+  
+    <div class="section">
+      <h3>Contraseña</h3>
+      <label>Contraseña Anterior</label>
+      <input type="password" class="form-control" [(ngModel)]="contraseniaAnterior" />
+  
+      <label>Nueva Contraseña</label>
+      <input type="password" class="form-control" [(ngModel)]="nuevaContrasenia" />
+  
+      <label>Confirmar Nueva Contraseña</label>
+      <input type="password" class="form-control" [(ngModel)]="confirmarNuevaContrasenia" />
+    </div>
+  
+    <div class="buttons">
+      <button (click)="guardar()" class="btn btn-primary">Guardar</button>
+      <button (click)="volver()" class="btn btn-secondary">Volver</button>
+    </div>
+  </div>
+  

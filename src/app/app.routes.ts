@@ -20,12 +20,14 @@ import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.compo
 import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
 import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
 import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cuenta.component';
+import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
   // { path: 'login', component: LoginComponent },  // Ruta para login
   // { path: 'registro', component: RegistroComponent },  // Ruta para registro
+  { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent },
   { path: 'confirmar-orden/:id', component: ConfirmarOrdenComponent },
    { path: "gestion-eventos", component: GestionEventosComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'crear-evento', component: CrearEventoComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },  // Ruta para crear evento
