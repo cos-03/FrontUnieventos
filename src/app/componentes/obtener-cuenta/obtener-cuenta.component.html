@@ -36,19 +36,18 @@
   
   
          <div class="col-12 text-center">
-
-          <button type="submit" class="btn btn-primary" [disabled]="editarCuentaForm.invalid">
-            <i class="fa-solid fa-plus me-2"></i>editar cuenta
-          </button>
-          <button type="button" [routerLink]="['/editar-cuenta', obtenerIdCuenta()]" class="btn btn-primary">Ver Perfil</button>
-          <div class="col-12 text-center">
-
-          <button type="button" [routerLink]="['/cambiar-contrasenia']" class="btn btn-primary">cambiar contraseña</button>
-          <button type="button" [routerLink]="['/editar-cuenta', obtenerIdCuenta()]" class="btn btn-primary">historial</button>
-          <button type="button" [routerLink]="['/editar-cuenta',obtenerIdCuenta()]" class="btn btn-primary">boletas</button>
-
-         </div>
+          <button type="button" [routerLink]="['/editar-cuenta', obtenerIdCuenta()]" class="btn btn-primary">Editar Perfil</button>
+          <button type="button" [routerLink]="['/cambiar-contrasenia']" class="btn btn-primary">Cambiar Contraseña</button>
+          <button type="button" [routerLink]="['/historial', obtenerIdCuenta()]" class="btn btn-primary">Historial</button>
+          <button type="button" [routerLink]="['/boletas', obtenerIdCuenta()]" class="btn btn-primary">Boletas</button>
         </div>
+        <div class="col-12 text-center">
+          <!-- Otros botones -->
+          <button type="button" (click)="inactivarCuenta()" class="btn btn-danger">Inactivar Cuenta</button>
+        </div>
+        
+       
+        
   
     </form>
   

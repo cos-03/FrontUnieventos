@@ -138,4 +138,28 @@ export class ObtenerCuentaComponent implements OnInit {
          },
        });
      }
-}
+
+     inactivarCuenta(): void {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Deseas inactivar tu cuenta? Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, inactivar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.publicoService.inactivarCuenta(this.codigoCuenta).subscribe({
+            next: () => {
+              Swal.fire('Cuenta Inactivada', 'Tu cuenta ha sido inactivada exitosamente.', 'success');
+            },
+            error: (error) => {
+              Swal.fire('Error', 'Hubo un problema al inactivar la cuenta.', 'error');
+              console.error(error);
+            },
+          });
+        }
+      });
+    }
+  }
+

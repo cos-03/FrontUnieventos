@@ -54,7 +54,9 @@ enviarCodigoActivacion(correo: string): Observable<MensajeDTO> {
 cambiarPassword(cambiarPasswordDTO: CambiarPasswordDTO): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.publicoURL}/cambiar-password`, cambiarPasswordDTO);
 }
-
+public inactivarCuenta(id: string): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.publicoURL}/eliminar-cuenta/${id}`, {});
+}
 
 }
 
