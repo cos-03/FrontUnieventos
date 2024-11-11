@@ -94,5 +94,39 @@ public buscarOrdenesPorRangoDeFechas(d1: string, d2: string): Observable<Mensaje
 public listarTodasLasOrdenes(): Observable<MensajeDTO> {
   return this.http.get<MensajeDTO>(`${this.apiURL}/obtener-ordenes-orden`, { headers: this.getAuthHeaders() });
 }
+// Buscar boletas por nombre o identificación
+buscarBoletasPorNombreOIdentificacion(nombreOId: string): Observable<MensajeDTO[]> {
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/buscar-boleta`, { params: { nombre: nombreOId } });
+}
+
+// Listar todas las boletas de un propietario específico
+listarBoletasPorPropietario(idPropietario: string): Observable<MensajeDTO[]> {
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/listarBoletasPropietario-boleta/${idPropietario}`);
+}
+
+// Obtener el detalle de una boleta específica
+obtenerDetalleBoleta(idBoleta: string, idPropietario: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/detalle-boleta/${idBoleta}/${idPropietario}`);
+}
+
+// Listar boletas enviadas de un propietario
+listarBoletasEnviadas(idPropietario: string): Observable<MensajeDTO[]> {
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/listarBoletasEnviadas-boleta/${idPropietario}/envios/enviados`);
+}
+
+// Listar boletas pendientes de un propietario
+listarBoletasPendientes(idPropietario: string): Observable<MensajeDTO[]> {
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/listarBoletasPendientes-boleta/${idPropietario}`);
+}
+
+// Transferir una boleta a un nuevo propietario
+transferirBoleta(idBoleta: string, idPropietario: string, idNuevoPropietario: string): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/transferir-boleta/${idBoleta}/${idPropietario}/${idNuevoPropietario}`, null);
+}
+
+// Aceptar una boleta por parte de un nuevo propietario
+aceptarBoleta(idBoleta: string, idNuevoPropietario: string): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/aceptar-boleta/${idBoleta}/${idNuevoPropietario}`, null);
+}
 
 }

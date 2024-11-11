@@ -1,52 +1,80 @@
 <div class="container mt-5">
-    <div class="card">
-      <!-- Encabezado de la tarjeta -->
-      <div class="card-header ps-5 pt-4 pb-4">
-        <h5 class="mb-0"><i class="fa-solid fa-ticket me-3"></i>Gestión de Boletas</h5>
+  <!-- Título -->
+  <h2 class="text-center mb-4">Gestión de Mis Boletas</h2>
+
+ <!-- Formulario de búsqueda de boletas -->
+ <div class="card mb-4">
+  <div class="card-header">Buscar Boletas</div>
+  <div class="card-body">
+    <form (ngSubmit)="buscarBoletasPorNombreOIdentificacion()">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Ingrese el nombre o identificación de la boleta"
+          [(ngModel)]="nombreOId"
+          name="nombreOId"
+          required
+        />
       </div>
-  
-      <div class="card-body p-5">
-        <!-- Barra de búsqueda -->
-        <div class="mb-3 d-flex">
-          <input
-            type="text"
-            class="form-control me-2"
-            placeholder="Ingresar id o nombre"
-            [(ngModel)]="filtroBusqueda"
-          />
-          <button class="btn btn-primary" (click)="buscarBoletas()">
-            Buscar
-          </button>
-        </div>
-  
-        <!-- Tabla de boletas -->
-        <div class="overflow-x-auto rounded-xl">
-          <table class="min-w-full bg-white border border-gray-200">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="px-4 py-2 text-left">Nombre Evento</th>
-                <th class="px-4 py-2 text-left">Correo</th>
-                <th class="px-4 py-2 text-left">Dueño del boleto</th>
-                <th class="px-4 py-2 text-left">Num. Boletas</th>
-                <th class="px-4 py-2 text-center">Acción</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr *ngFor="let boleta of boletasFiltradas">
-                <td class="px-4 py-2">{{ boleta.nombreEvento }}</td>
-                <td class="px-4 py-2">{{ boleta.correo }}</td>
-                <td class="px-4 py-2">{{ boleta.dueno }}</td>
-                <td class="px-4 py-2">{{ boleta.numBoletas }}</td>
-                <td class="px-4 py-2 text-center">
-                  <button class="btn btn-link text-primary" (click)="verDetalle(boleta)">
-                    Ver Detalle
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+    </form>
+  </div>
+</div>
+
+  <!-- Listado de boletas -->
+  <div class="card mb-4" *ngIf="boletas.length > 0">
+    <div class="card-header">Mis Boletas</div>
+    <div class="card-body">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Nombre del Evento</th>
+            <th>Fecha del Evento</th>
+            <th>Localidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let boleta of boletas">
+            <td>{{ boleta.nombreEvento }}</td>
+            <td>{{ boleta.fechaEvento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ boleta.nombreLocalidad }}</td>
+            <td>{{ boleta.estado }}</td>
+            <td>
+              <button
+                class="btn btn-info btn-sm"
+                (click)="obtenerDetalleBoleta(boleta.idBoleta, boleta.idClientePropietario)"
+              >
+                Ver Detalle
+              </button>
+              <button
+                class="btn btn-warning btn-sm"
+                (click)="transferirBoleta(boleta.idBoleta, boleta.idClientePropietario, boleta.idPropietarioOriginal)"
+              >
+                Transferir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
   
+  
+
+  <!-- Detalle de la boleta -->
+  <div *ngIf="detalleBoleta" class="card mb-4">
+    <div class="card-header">Detalle de la Boleta</div>
+    <div class="card-body">
+      <p><strong>Nombre del Evento:</strong> {{ detalleBoleta.nombreEvento }}</p>
+      <p><strong>Fecha del Evento:</strong> {{ detalleBoleta.fechaEvento | date: 'dd/MM/yyyy' }}</p>
+      <p><strong>Localidad:</strong> {{ detalleBoleta.nombreLocalidad }}</p>
+      <p><strong>Estado:</strong> {{ detalleBoleta.estado }}</p>
+      <p><strong>ID del Propietario Original:</strong> {{ detalleBoleta.idPropietarioOriginal }}</p>
+      <button class="btn btn-primary" (click)="aceptarBoleta(detalleBoleta.idBoleta, detalleBoleta.idClientePropietario)">Aceptar Boleta</button>
+    </div>
+  </div>
+</div>

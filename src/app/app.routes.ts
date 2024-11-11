@@ -21,7 +21,7 @@ import { EditarEventoComponent } from './componentes/editar-evento/editar-evento
 import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
 import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cuenta.component';
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
-import { BoletasComponent } from './componentes/gestion-mis-boletas/gestion-mis-boletas.component';
+import { BoletaComponent } from './componentes/gestion-mis-boletas/gestion-mis-boletas.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 
@@ -29,7 +29,7 @@ export const routes: Routes = [
    { path: '', component: InicioComponent },  // Ruta raíz
   // { path: 'login', component: LoginComponent },  // Ruta para login
   // { path: 'registro', component: RegistroComponent },  // Ruta para registro
-  { path: 'gestion-mis-boletas', component: BoletasComponent },
+  
 
   { path: 'cambiar-contrasenia/:id', component: CambiarContraseniaComponent },
   { path: 'confirmar-orden/:id', component: ConfirmarOrdenComponent },
@@ -53,6 +53,7 @@ export const routes: Routes = [
    { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+   { path: "gestion-mis-boletas", component: BoletaComponent },//, canActivate: [RolesGuard], canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }
 
    { path: 'panel-admin', component: PanelAdminComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "historial-compras", component: HistorialComprasComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
