@@ -5,11 +5,12 @@ import { AuthService } from '../../servicios/auth.service';
 import { LoginDTO } from '../../dto/login-dto';
 import Swal from 'sweetalert2';
 import { TokenService } from '../../servicios/token.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],  // Importa ReactiveFormsModule y CommonModule
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],  // Importa ReactiveFormsModule y CommonModule
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

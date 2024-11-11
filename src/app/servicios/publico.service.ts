@@ -62,6 +62,9 @@ public inactivarCuenta(id: string): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.publicoURL}/activar-cuenta`, activarCuentaDTO);
 }
 
+reenviarCodigoActivacion(correo: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.publicoURL}/enviar-codigo-auth/${correo}`);
+}
 
 }
 
