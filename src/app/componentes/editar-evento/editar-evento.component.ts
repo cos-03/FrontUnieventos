@@ -49,10 +49,8 @@ export class EditarEventoComponent implements OnInit {
       ciudad: ['', [Validators.required]],
       localidades: this.formBuilder.array([]),
       fechaEvento: ['', Validators.required],
-      imagenPortada: [''],
-      imagenLocalidades: ['']
-
-     
+      imagenPortada: ['', Validators.required],
+      imagenLocalidades: ['', Validators.required]
       
       
     });
@@ -69,31 +67,17 @@ export class EditarEventoComponent implements OnInit {
           const fechaEvento = evento.fechaEvento
             ? new Date(evento.fechaEvento).toISOString().split('T')[0]
             : '';
-            console.log(evento.id);
-            console.log(evento.nombre);
-            console.log(evento.fechaEvento);
-            console.log(evento.descripcion);
-            console.log(evento.tipo);
-            console.log(evento.ciudad);
-            console.log(evento.localidades);
-
-            console.log(evento.imagenLocalidades);
-            console.log(evento.imagenPortada);
-
-
-
-
 
             this.crearEventoForm.patchValue({
-            id: evento.id,
-            nombre: evento.nombre,
-            descripcion: evento.descripcion,
-            tipo: evento.tipo,
-            ciudad: evento.ciudad,
-            fechaEvento: evento.fechaEvento,
-            imagenLocalidades: evento.imagenLocalidades,
-            imagenPortada: evento.imagenPortada
-          });
+              id: evento.id,
+              nombre: evento.nombre,
+              descripcion: evento.descripcion,
+              tipo: evento.tipo,
+              ciudad: evento.ciudad,
+              fechaEvento: evento.fechaEvento,
+              imagenLocalidades: evento.imagenLocalidades,
+              imagenPortada: evento.imagenPortada
+            });
 
           this.localidades.clear();
           evento.localidades.forEach((localidad: any) => {
@@ -133,6 +117,8 @@ export class EditarEventoComponent implements OnInit {
 
   public editarEvento() {
     if (this.crearEventoForm.valid) {
+
+      console.log(this.crearEventoForm.value);
       const eventoData = this.crearEventoForm.value;
 
       this.adminService.actualizarEvento(eventoData).subscribe({
@@ -198,7 +184,7 @@ export class EditarEventoComponent implements OnInit {
    public subirImagen(tipo:string){
     const formData = new FormData();
     const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
-    const formControl = tipo == 'portada' ? 'imagenImportada' : 'imagenLocalidades';
+    const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
    
    
     formData.append('imagen', imagen!);

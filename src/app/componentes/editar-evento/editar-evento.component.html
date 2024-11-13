@@ -72,10 +72,11 @@
   <div class="mb-3">
       <label class="form-label">Imagen Portada:</label>
       <div class="d-flex gap-2">
-          <input type="file" (change)="onFileChange($event, 'portada')" class="form-control"/>
+          <input type="file" (change)="onFileChange($event, 'portada')" class="form-control" />
           <button type="button" class="btn btn-primary" (click)="subirImagen('portada')">
               <i class="fa-solid fa-cloud-arrow-up"></i> actualizar localidad
           </button>
+          <img src="{{crearEventoForm.get('imagenPortada')?.value}}" width="100px" />
       </div>
   </div>
 
@@ -83,10 +84,11 @@
   <div class="mb-3">
       <label class="form-label">Imagen Localidades:</label>
       <div class="d-flex gap-2">
-          <input type="file" (change)="onFileChange($event, 'localidades')" class="form-control"/>
+          <input type="file" (change)="onFileChange($event, 'localidades')" class="form-control" />
           <button type="button" class="btn btn-primary" (click)="subirImagen('localidades')">
               <i class="fa-solid fa-cloud-arrow-up"></i> actualizar localidad
           </button>
+          <img src="{{crearEventoForm.get('imagenLocalidades')?.value}}" width="100px" />
       </div>
   </div>
 
