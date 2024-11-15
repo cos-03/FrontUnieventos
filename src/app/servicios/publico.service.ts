@@ -67,6 +67,9 @@ public inactivarCuenta(id: string): Observable<MensajeDTO> {
  public activarCuenta(activarCuentaDTO: ActivarCuentaDTO): Observable<MensajeDTO> {
   return this.http.put<MensajeDTO>(`${this.publicoURL}/activar-cuenta`, activarCuentaDTO);
 }
+public obtenerEventoId(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.publicoURL}/obtener-evento/${id}`);
+}
 
 
 }
