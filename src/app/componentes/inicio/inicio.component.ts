@@ -111,6 +111,7 @@ export class InicioComponent implements OnInit {
  }
 
  ngOnInit(): void {
+  
   this.obtenerEventos();
   this.listarCiudades();
   this.listarEventos();
