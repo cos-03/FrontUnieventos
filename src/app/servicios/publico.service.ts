@@ -43,7 +43,7 @@ export class PublicoService {
 
 
  public obtenerEvento(id: string): Observable<MensajeDTO> {
-   return this.http.get<MensajeDTO>(`${this.publicoURL}/obtener-info-evento/${id}`);
+   return this.http.get<MensajeDTO>(`${this.publicoURL}/obtener-evento/${id}`);
  }
 
  public obtenerCuenta(id: string): Observable<MensajeDTO> {
