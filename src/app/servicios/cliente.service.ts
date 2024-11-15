@@ -50,14 +50,18 @@ public agregarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<Mensa
   return this.http.post<MensajeDTO>(`${this.apiURL}/agregarItem-carrito/${id}`, item, { headers: this.getAuthHeaders() });
 }
 
+public agregarItemCarritoUnico(id: string, item: DetalleCarritoDTO): Observable<MensajeDTO> {
+  return this.http.post<MensajeDTO>(`${this.apiURL}/agregarItem-carrito-unico/${id}`, item, { headers: this.getAuthHeaders() });
+}
+
 // Editar item en el carrito
 public editarItemCarrito(id: string, item: DetalleCarritoDTO): Observable<MensajeDTO> {
   return this.http.post<MensajeDTO>(`${this.apiURL}/editarItem-carrito/${id}`, item, { headers: this.getAuthHeaders() });
 }
 
 // Eliminar item del carrito
-public eliminarItemCarrito(id: string, idDetalleCarrito:  DetalleCarritoDTO): Observable<MensajeDTO> {
-  return this.http.put<MensajeDTO>(`${this.apiURL}/eliminarItem-carrito/${id}/${idDetalleCarrito}`, null, { headers: this.getAuthHeaders() });
+public eliminarItemCarrito(id: string, idDetalleCarrito:  string): Observable<MensajeDTO> {
+  return this.http.put<MensajeDTO>(`${this.apiURL}/eliminarItem-carrito/${id}/${idDetalleCarrito}`, { headers: this.getAuthHeaders() });
 }
 
 // Obtener carrito

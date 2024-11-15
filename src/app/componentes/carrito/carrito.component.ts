@@ -38,6 +38,19 @@ export class CarritoComponent {
     this.obtenerCarrito();
   }
 
+  actualizarCantidad2(item: DetalleCarritoDTO) {
+    console.log(1);
+   //console.log('Ítem actualizado:', item);
+ }
+
+ public obtenerPrecio2(item: DetalleCarritoDTO): number {
+   return 1;
+ }
+
+
+
+
+
   public obtenerCarrito() {
     this.idCuenta = this.tokenService.getIDCuenta();
     this.clienteService.traerCarritoCliente(this.idCuenta).subscribe({
@@ -60,13 +73,18 @@ export class CarritoComponent {
     this.clienteService.editarItemCarrito(this.carrito.id, item);
     //console.log('Ítem actualizado:', item);
   }
-  
+
+
+
+
+
 
   public obtenerPrecio(item: DetalleCarritoDTO): number {
     // Verificar si ya tenemos el precio calculado para este ítem
     if (this.preciosItem.has(item.idEvento)) {
       return this.preciosItem.get(item.idEvento)! * item.cantidad;
     }
+
   
     // Llamar al servicio para obtener el evento y su precio
     this.publicoService.obtenerEvento(item.idEvento).subscribe({
@@ -140,7 +158,15 @@ export class CarritoComponent {
 
   eliminarItem(item: DetalleCarritoDTO) {
     // Implementar lógica para eliminar un solo item si es necesario
-    this.clienteService.eliminarItemCarrito(this.carrito.id, item );
+    this.clienteService.eliminarItemCarrito(this.carrito.id, item.idDetalleCarrito).subscribe({
+      next: (data) => {
+        // Guardar el nombre del evento en el mapa
+       console.log(data);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   eliminarItems() {
