@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 import { ItemEventoDTO } from '../../dto/item-evento-dto';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
+import { TokenService } from '../../servicios/token.service';
+import { TipoEventoDTO } from '../../dto/tipo-evento-dto';
+import { ClienteService } from '../../servicios/cliente.service';
 
 @Component({
   selector: 'app-inicio',
@@ -16,15 +19,90 @@ import { FormsModule } from '@angular/forms';
 })
 export class InicioComponent implements OnInit {
 
+  eventosTodos!:ItemEventoDTO[];
   eventos: ItemEventoDTO[] = [];
   ciudades: string[] = [];
   eventosFiltrados!: ItemEventoDTO[];
   selectedCiudad: string = '';
   selectedFecha: string = '';
   selectedEvento: string = '';
- 
+  idCuenta!: any;
 
-  constructor(private publicoService: PublicoService) {
+  evetosPreferencia!: EventoDTO;
+
+  eventosPreferencia: ItemEventoDTO[] = [];
+
+  filtrarPorPreferencia: boolean = false; // Nueva propiedad para el checkbox
+
+  //preferenciasUsuario!: TipoEventoDTO[] ;
+  preferenciasUsuario: string[] = [];
+
+  // Lista de tipos de evento
+  tiposEvento = ["DEPORTE", "CONCIERTO", "CULTURAL", "MODA", "BELLEZA"];
+  // Estado de la ventana emergente
+  mostrarVentanaPreferencias = false;
+
+   // Abrir y cerrar la ventana de preferencias
+   abrirVentanaPreferencias(): void {
+    this.mostrarVentanaPreferencias = true;
+  }
+
+  cerrarVentanaPreferencias(): void {
+    this.mostrarVentanaPreferencias = false;
+  }
+    // Seleccionar o deseleccionar un tipo de evento
+    toggleSeleccion(tipo: string): void {
+      const index = this.preferenciasUsuario.findIndex(preferencia => preferencia === tipo);
+      if (index >= 0) {
+        this.preferenciasUsuario.splice(index, 1); // Deseleccionar
+      } else {
+        this.preferenciasUsuario.push(tipo); // Seleccionar
+      }
+    }
+  
+    // Verificar si un tipo está seleccionado
+    estaSeleccionado(tipo: string): boolean {
+      return this.preferenciasUsuario.includes(tipo);
+    }
+  
+    // Guardar las preferencias seleccionadas
+    guardarPreferencias(): void {
+      //this.preferenciasUsuario = this.preferenciasUsuario.map(tipo => ({ tipoEvento: tipo }));
+      this.mostrarVentanaPreferencias = false;
+      this.clienteService.agregarPreferenciasUsuario(this.idCuenta, this.preferenciasUsuario).subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+      console.log("Preferencias guardadas:", this.preferenciasUsuario);
+    }
+
+  public mostrarEventosPreferidosCliente(){
+    if (this.filtrarPorPreferencia) {
+      this.publicoService.obtenerPreferenciasUsuario(this.idCuenta).subscribe({
+        next: (data) => {
+          this.eventosPreferencia = data.map((evento: any) => ({
+            ...evento,
+            fecha: new Date(evento.fecha),
+          }));
+          this.eventosFiltrados = [...this.eventosPreferencia];
+          this.eventos = this.eventosFiltrados;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    } else {
+      this.eventos = this.eventosTodos;
+    }
+  }
+
+
+
+  constructor(private publicoService: PublicoService,private tokenService: TokenService, private clienteService:ClienteService) {
     this.eventos = [];
     this.ciudades = [];
     this.obtenerEventos();
@@ -36,6 +114,8 @@ export class InicioComponent implements OnInit {
   this.obtenerEventos();
   this.listarCiudades();
   this.listarEventos();
+  this.idCuenta = this.tokenService.getIDCuenta();
+  
 
 }
 
@@ -47,6 +127,7 @@ public obtenerEventos(): void {
         fecha: new Date(evento.fecha) // Asegura que la fecha esté correctamente formateada
       }));
       this.eventosFiltrados = [...this.eventos]; // Inicializar eventos filtrados con todos los eventos
+      this.eventosTodos = this.eventos;
     },
     error: (error) => {
       console.error(error);
@@ -101,5 +182,4 @@ public filtrarEventos(): void {
 }
 
 
- }
- 
+}

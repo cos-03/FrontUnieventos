@@ -7,6 +7,7 @@ import { ClienteService } from '../../servicios/cliente.service';
 import { ActivatedRoute } from '@angular/router';
 import { BoletaDTO } from '../../dto/boleta/boleta-dto';
 import { MensajeDTO } from '../../dto/mensaje-dto';
+import { TokenService } from '../../servicios/token.service';
 
 @Component({
   selector: 'app-boletas',
@@ -25,78 +26,135 @@ export class BoletaComponent implements OnInit {
   boletasEnviadas!: BoletaDTO[];
   idBoleta!: string;
   idPropietario!: string;
+  idCuenta!: any;
 
-  constructor(private ClienteService: ClienteService, private route: ActivatedRoute) {}
 
+  //Tranferecia boleta
+  nombreDestinatario: string = '';
+  correoDestinatario: string = '';
+  confirmarCorreoDestinatario: string = '';
+  idBoletaSeleccionada: string = '';
+  mostrarFormularioTransferencia: boolean = false;
+
+  constructor(private ClienteService: ClienteService, private route: ActivatedRoute,private tokenService: TokenService) {}
+
+
+  //Tranferecia boleta
+  mostrarTransferirBoleta(idBoleta: string): void {
+    this.idBoletaSeleccionada = idBoleta;
+    this.mostrarFormularioTransferencia = true;
+  }
+
+  cancelarTransferencia(): void {
+    this.mostrarFormularioTransferencia = false;
+    this.nombreDestinatario = '';
+    this.correoDestinatario = '';
+    this.confirmarCorreoDestinatario = '';
+  }
+
+  transferirBoletaConfirm(): void {
+    if (this.correoDestinatario != this.confirmarCorreoDestinatario) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Los correos electrónicos no coinciden. Por favor, verifica.'
+      });
+
+
+      return;
+    }
+
+//BUSCAR CON EL CORREO EL ID DEL DESTINATARIO
+
+    this.ClienteService.transferirBoleta(this.idBoletaSeleccionada, this.idCuenta, this.correoDestinatario)
+      .subscribe({
+        next: (respuesta:MensajeDTO) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Transferencia exitosa',
+            text: 'La boleta ha sido transferida correctamente. '
+          });
+          console.log(respuesta.respuesta);
+        
+
+          this.cancelarTransferencia();
+          this.refrescarBoletas();
+        },
+        error: (error) => {
+          console.log('Error',error);
+         /* Swal.fire({
+            icon: 'error',
+            title: 'Error al transferir',
+            text: 'No se pudo realizar la transferencia. Intenta nuevamente.'
+          });*/
+        }
+      });
+  }
   ngOnInit(): void {
+    this.idCuenta = this.tokenService.getIDCuenta();
     const idPropietario = 'ID_DEL_PROPIETARIO';  // Obtén el ID del propietario de la sesión o de algún otro lugar
-    this.ClienteService.listarBoletasPorPropietario(idPropietario)
+    this.ClienteService.listarBoletasPorPropietario(this.idCuenta)
       .subscribe((data: MensajeDTO[]) => {
         this.boletas = data;
       }, (error) => {
         console.error('Error al cargar las boletas:', error);
       });
   
-    this.obtenerBoletas();
+    //this.obtenerBoletas();
   }
 
-  // Obtener todas las boletas
-  obtenerBoletas(): void {
-    this.ClienteService.buscarBoletasPorNombreOIdentificacion(this.nombreOId).subscribe({
-      next: (mensajes: MensajeDTO[]) => {
-        this.boletas = mensajes.map(mensaje => ({
-          idBoleta: mensaje.idBoleta || '',
-          idEvento: mensaje.idEvento || '',
-          idClientePropietario: mensaje.idClientePropietario || '',
-          nombreEvento: mensaje.nombreEvento || '',
-          fechaEvento: mensaje.fechaEvento || new Date(),
-          nombreLocalidad: mensaje.nombreLocalidad || '',
-          estado: mensaje.estado || 'pendiente',
-          idPropietarioOriginal: mensaje.idPropietarioOriginal || ''
-        }));
-        
-        // Filtrar las boletas según su estado
-        this.boletasPendientes = this.boletas.filter(b => b.estado === 'pendiente');
-        this.boletasEnviadas = this.boletas.filter(b => b.estado === 'enviada');
-      },
-      error: (err) => {
-        console.error('Error al obtener boletas', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al obtener boletas',
-          text: 'No se pudieron recuperar las boletas. Por favor, inténtalo de nuevo.'
-        });
-      }
+   // Método para refrescar la lista de boletas del propietario
+   refrescarBoletas(): void {
+    this.ClienteService.listarBoletasPorPropietario(this.idCuenta)
+    .subscribe((data: MensajeDTO[]) => {
+      this.boletas = data;
+    }, (error) => {
+      console.error('Error al cargar las boletas:', error);
     });
+
+  // Llama al método con el ID del propietario
   }
 
 
-
-  // Método para buscar boletas por nombre o identificación
   buscarBoletasPorNombreOIdentificacion(): void {
-    this.ClienteService.buscarBoletasPorNombreOIdentificacion(this.nombreOId).subscribe({
-      next: (mensajes: MensajeDTO[]) => {
-        this.boletas = mensajes.map(mensaje => ({
-          idBoleta: mensaje.idBoleta || '',
-          idEvento: mensaje.idEvento || '',
-          idClientePropietario: mensaje.idClientePropietario || '',
-          nombreEvento: mensaje.nombreEvento || '',
-          fechaEvento: mensaje.fechaEvento || new Date(),
-          nombreLocalidad: mensaje.nombreLocalidad || '',
-          estado: mensaje.estado || 'pendiente',
-          idPropietarioOriginal: mensaje.idPropietarioOriginal || ''
-        }));
-      },
-      error: (err) => {
-        console.error('Error al buscar boletas', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al buscar boletas',
-          text: 'No se pudieron recuperar las boletas. Por favor, inténtalo de nuevo.'
-        });
-      }
-    });
+    if(this.nombreOId != ''){
+
+      this.ClienteService.buscarBoletasPorNombreOIdentificacion(this.nombreOId).subscribe({
+      
+        next: (mensajes: MensajeDTO[]) => {
+          if (mensajes && mensajes.length > 0) {
+            this.boletas = mensajes.map(mensaje => ({
+              idBoleta: mensaje.idBoleta || '',
+              idEvento: mensaje.idEvento || '',
+              idClientePropietario: mensaje.idClientePropietario || '',
+              nombreEvento: mensaje.nombreEvento || '',
+              fechaEvento: mensaje.fechaEvento || new Date(),
+              nombreLocalidad: mensaje.nombreLocalidad || '',
+              estado: mensaje.estado || 'pendiente',
+              idPropietarioOriginal: mensaje.idPropietarioOriginal || ''
+            }));
+          } else {
+            Swal.fire({
+              icon: 'info',
+              title: 'Sin resultados',
+              text: 'No se encontraron boletas para el nombre o identificación proporcionados.'
+            });
+            this.boletas = []; // Limpiar la lista de boletas si no hay resultados
+          }
+        },
+        error: (err) => {
+          console.error('Error al buscar boletas:', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al buscar boletas',
+            text: 'No se pudieron recuperar las boletas. Por favor, inténtalo de nuevo.'
+          });
+        }
+      });
+    }
+
   }
+  
 
   // Otros métodos aquí...
 

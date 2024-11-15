@@ -2,25 +2,26 @@
   <!-- Título -->
   <h2 class="text-center mb-4">Gestión de Mis Boletas</h2>
 
- <!-- Formulario de búsqueda de boletas -->
- <div class="card mb-4">
-  <div class="card-header">Buscar Boletas</div>
-  <div class="card-body">
-    <form (ngSubmit)="buscarBoletasPorNombreOIdentificacion()">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Ingrese el nombre o identificación de la boleta"
-          [(ngModel)]="nombreOId"
-          name="nombreOId"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary mt-2">Buscar</button>
-    </form>
+  <!-- Formulario de búsqueda de boletas -->
+  <div class="card mb-4">
+    <div class="card-header">Buscar Boletas</div>
+    <div class="card-body">
+      <form (ngSubmit)="buscarBoletasPorNombreOIdentificacion()">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingrese el nombre evento o identificación de la boleta"
+            [(ngModel)]="nombreOId"
+            name="nombreOId"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+        <button type="button" class="btn btn-secondary mt-2 ml-2" (click)="refrescarBoletas()">Refrescar</button>
+      </form>
+    </div>
   </div>
-</div>
 
   <!-- Listado de boletas -->
   <div class="card mb-4" *ngIf="boletas.length > 0">
@@ -51,7 +52,7 @@
               </button>
               <button
                 class="btn btn-warning btn-sm"
-                (click)="transferirBoleta(boleta.idBoleta, boleta.idClientePropietario, boleta.idPropietarioOriginal)"
+                (click)="mostrarTransferirBoleta(boleta.idBoleta)"
               >
                 Transferir
               </button>
@@ -61,9 +62,6 @@
       </table>
     </div>
   </div>
-
-  
-  
 
   <!-- Detalle de la boleta -->
   <div *ngIf="detalleBoleta" class="card mb-4">
@@ -75,6 +73,31 @@
       <p><strong>Estado:</strong> {{ detalleBoleta.estado }}</p>
       <p><strong>ID del Propietario Original:</strong> {{ detalleBoleta.idPropietarioOriginal }}</p>
       <button class="btn btn-primary" (click)="aceptarBoleta(detalleBoleta.idBoleta, detalleBoleta.idClientePropietario)">Aceptar Boleta</button>
+    </div>
+  </div>
+
+  <!-- Formulario de Transferencia -->
+  <div *ngIf="mostrarFormularioTransferencia" class="card mb-4">
+    <div class="card-header">Transferir Boleta</div>
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="nombreDestinatario" class="form-label">Nombre Completo del Destinatario</label>
+          <input type="text" class="form-control" id="nombreDestinatario" [(ngModel)]="nombreDestinatario" name="nombreDestinatario">
+        </div>
+        <div class="mb-3">
+          <label for="correoDestinatario" class="form-label">Correo Electrónico del Destinatario</label>
+          <input type="email" class="form-control" id="correoDestinatario" [(ngModel)]="correoDestinatario" name="correoDestinatario">
+        </div>
+        <div class="mb-3">
+          <label for="confirmarCorreoDestinatario" class="form-label">Confirma el Correo Electrónico</label>
+          <input type="email" class="form-control" id="confirmarCorreoDestinatario" [(ngModel)]="confirmarCorreoDestinatario" name="confirmarCorreoDestinatario">
+        </div>
+      </form>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-danger" (click)="cancelarTransferencia()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="transferirBoletaConfirm()">Transferir</button>
+      </div>
     </div>
   </div>
 </div>

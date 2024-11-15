@@ -21,6 +21,12 @@ export class PublicoService {
  constructor(private http: HttpClient) { }
 
 
+ //Preferncia evento usuario
+ public obtenerPreferenciasUsuario(idUsuario: string): Observable<[]> {
+  return this.http.get<[]>(`${this.publicoURL}/obtener-preferenciasUsuario/${idUsuario}`);
+}
+
+
  public listarTipos(): Observable<MensajeDTO> {
    return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-tipo-eventos`);
  }

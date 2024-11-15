@@ -8,6 +8,7 @@ import{ CrearOrdenDTO } from '../dto/orden/crear-orden-dto';
 import { EditarOrdenDTO } from '../dto/orden/editar-orden-dto';
 import { InformacionOrdenDTO } from '../dto/orden/informacion-orden-dto';
 import { DetalleCarritoDTO } from '../dto/carrito/detalleCarrito-dto';
+import { TipoEventoDTO } from '../dto/tipo-evento-dto';
 
 
 
@@ -28,6 +29,15 @@ export class ClienteService {
 
   // Métodos de Carrito en el servicio frontend
 
+  public agregarPreferenciasUsuario(idUsuario: string, tipoPreferencias: string[]): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(
+      `${this.apiURL}/agregarPreferenciasUsuario-preferencias/${idUsuario}`,
+      tipoPreferencias,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+  
+  
    // Función para redimir el cupón
    public redimirCupon(codigo: string): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.apiURL}/redimir-cupon/${codigo}`, null, { headers: this.getAuthHeaders() });
@@ -96,8 +106,11 @@ public listarTodasLasOrdenes(): Observable<MensajeDTO> {
 }
 // Buscar boletas por nombre o identificación
 buscarBoletasPorNombreOIdentificacion(nombreOId: string): Observable<MensajeDTO[]> {
-  return this.http.get<MensajeDTO[]>(`${this.apiURL}/buscar-boleta`, { params: { nombre: nombreOId } });
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/buscar-boletas-nombreEvento`, { params: { nombre: nombreOId } });
 }
+/**buscarBoletasPorNombreOIdentificacion(nombreOId: string): Observable<MensajeDTO[]> {
+  return this.http.get<MensajeDTO[]>(`${this.apiURL}/buscar-boleta`, { params: { nombre: nombreOId } });
+} */
 
 // Listar todas las boletas de un propietario específico
 listarBoletasPorPropietario(idPropietario: string): Observable<MensajeDTO[]> {
