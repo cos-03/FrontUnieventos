@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TokenService } from '../../servicios/token.service';
+import { ClienteService } from '../../servicios/cliente.service';
+import { InformacionOrdenDTO } from '../../dto/orden/informacion-orden-dto';
 
 @Component({
   selector: 'app-historial-compras',
@@ -11,9 +13,10 @@ import { TokenService } from '../../servicios/token.service';
 })
 export class HistorialComprasComponent {
   historialCompras!: string ;
-  
-  clienteService: any;
-  ordenes: any;
+  ClienteService!: ClienteService;
+  id!: string;
+
+  ordenes!: InformacionOrdenDTO;
 
   constructor (private tokenService: TokenService){
 
@@ -25,7 +28,7 @@ export class HistorialComprasComponent {
     const codigoCliente = this.tokenService.getCodigo();
  
  
-    this.clienteService.listarHistorialCompras(codigoCliente).subscribe({
+    this.ClienteService.listarHistorialCompras(this.id).subscribe({
       next: (data: { respuesta: any; }) => {
         this.ordenes = data.respuesta;
       },

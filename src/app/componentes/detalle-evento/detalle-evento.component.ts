@@ -18,7 +18,7 @@ import { InformacionEventoDTO } from '../../dto/informacion-evento-dto';
 })
 export class DetalleEventoComponent {
   codigoEvento: string = '';
-  evento: InformacionEventoDTO | undefined;
+  evento!: InformacionEventoDTO ;
   crearEventoForm!: FormGroup;
   localidades!: FormArray;
 
