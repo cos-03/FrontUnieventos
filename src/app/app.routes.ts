@@ -24,6 +24,9 @@ import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/c
 import { BoletaComponent } from './componentes/gestion-mis-boletas/gestion-mis-boletas.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 import { NuevaContraseniaComponent } from './componentes/nueva-contrasenia/nueva-contrasenia.component';
+import { PagoExitosoComponent } from './componentes/pago-exitoso/pago-exitoso.component';
+import { PagoFallidoComponent } from './componentes/pago-fallido/pago-fallido.component';
+import { PagoPendienteComponent } from './componentes/pago-pendiente/pago-pendiente.component';
 
 
 export const routes: Routes = [
@@ -32,6 +35,9 @@ export const routes: Routes = [
   // { path: 'registro', component: RegistroComponent },  // Ruta para registro
   
 
+  { path: 'pago-exitoso',component: PagoExitosoComponent },
+  { path: 'pago-fallido',component: PagoFallidoComponent },
+  { path: 'pago-pendiente',component: PagoPendienteComponent },
   { path: 'cambiar-contrasenia/:id', component: CambiarContraseniaComponent },
   { path: 'confirmar-orden/:id', component: ConfirmarOrdenComponent },
    { path: "gestion-eventos", component: GestionEventosComponent,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
