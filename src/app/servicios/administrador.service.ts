@@ -15,7 +15,7 @@ import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
 export class AdministradorService {
 
 
- private adminURL = "https://proyectoavanzada.onrender.com/api/admin";
+ private adminURL = "https://proyectoavanzada-2.onrender.com/api/admin";
 
 
  constructor(private http: HttpClient) { }

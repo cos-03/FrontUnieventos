@@ -13,7 +13,7 @@ export class AuthService {
   
 
 
- private authURL = "https://proyectoavanzada.onrender.com/api/auth";
+ private authURL = "https://proyectoavanzada-2.onrender.com/api/auth";
  
 
 
