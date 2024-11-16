@@ -2,7 +2,7 @@ import { LocalidadDTO } from "./localidad-dto"
 
 export interface EditarEventoDTO {
     id: String,
-    nombre: String ,
+    nombre: string ,
     descripcion: String ,
     imagenLocalidades: String ,
     tipo: string ,

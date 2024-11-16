@@ -159,4 +159,8 @@ aceptarBoleta(idBoleta: string, idNuevoPropietario: string): Observable<MensajeD
   return this.http.post<MensajeDTO>(`${this.apiURL}/aceptar-boleta/${idBoleta}/${idNuevoPropietario}`, null);
 }
 
+public listarHistorialCompras(id: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.apiURL}/obtenerHistorialOrdenes/${id}`);
+}
+
 }

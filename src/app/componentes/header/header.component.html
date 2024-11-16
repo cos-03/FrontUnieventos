@@ -14,7 +14,8 @@
         <li><a routerLink="/gestion-cupones" class="nav-link px-2">Gestión de cupones</a></li>
         
 
-        <li><a routerLink="/historial-compras" class="nav-link px-2">Historial de eventos</a></li>
+        <li><a [routerLink]="['/historial-compras', IdCuenta]" class="nav-link px-2">Historial de eventos</a></li>
+
       </ul>
 
 
