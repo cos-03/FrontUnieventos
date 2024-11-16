@@ -182,7 +182,12 @@ export class CarritoComponent implements OnInit{
     this.clienteService.eliminarItemCarrito(this.carrito.id, item.idDetalleCarrito).subscribe({
       next: (data) => {
         // Guardar el nombre del evento en el mapa
+        this.itemsCarrito = this.itemsCarrito.filter(i => i.idDetalleCarrito !== item.idDetalleCarrito);
+
+      // Actualizar el carrito con los nuevos items
+      this.carrito.items = this.itemsCarrito;
        console.log(data);
+       
       },
       error: (error) => {
         console.error(error);
