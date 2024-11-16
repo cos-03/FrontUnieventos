@@ -27,6 +27,19 @@ export class ClienteService {
   }
   constructor(private http: HttpClient) { }
 
+
+  public realizarPago(idOrden: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(
+      `${this.apiURL}/realizar-pago`,
+      null, // Aquí no necesitas un cuerpo porque usas `@RequestParam` en tu backend
+      {
+        params: { idOrden }, // Enviamos el `idOrden` como parámetro de la URL
+        headers: this.getAuthHeaders()
+      }
+    );
+  }
+  
+
   // Métodos de Carrito en el servicio frontend
 
   public agregarPreferenciasUsuario(idUsuario: string, tipoPreferencias: string[]): Observable<MensajeDTO> {

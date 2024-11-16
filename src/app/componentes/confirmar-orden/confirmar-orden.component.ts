@@ -37,6 +37,12 @@ export class ConfirmarOrdenComponent implements OnInit {
 
     // Definir el mapa de nombres de eventos
     nombresEventos = new  Map<string, string> ();
+    eventos!: EventoDTO[];
+
+    idOrden!:string;
+
+    
+    
 
   constructor(
     private clienteService: ClienteService,
@@ -53,6 +59,16 @@ export class ConfirmarOrdenComponent implements OnInit {
         this.obtenerCarrito();
       } else {
         console.error("Id de carrito no encontrado en la URL");
+      }
+    });
+    this.publicoService.listarTodosEventos().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.eventos = data.respuesta;
+        console.log(this.eventos);
+      },
+      error: (error) => {
+        console.error( error);
       }
     });
   }
@@ -133,6 +149,7 @@ export class ConfirmarOrdenComponent implements OnInit {
     }
     public obtenerEventoId(idEvento: string) {
       // Verificar si el nombre del evento ya está en el mapa para evitar solicitudes duplicadas
+      //console.log(idEvento);
       if (!this.nombresEventos.has(idEvento)) {
         this.publicoService.obtenerEvento(idEvento).subscribe({
           next: (data) => {
@@ -154,6 +171,7 @@ export class ConfirmarOrdenComponent implements OnInit {
         const detalleOrden: DetalleOrdenDTO = {
           idDetalleOrden: item.idDetalleCarrito,
           idEvento: item.idEvento,
+        
           precio: this.preciosItem.get(item.idEvento) ?? item.precioUnitario,
           nombreLocalidad: item.nombreLocalidad,
           cantidad: item.cantidad
@@ -176,6 +194,7 @@ export class ConfirmarOrdenComponent implements OnInit {
   // Método para crear la orden
  public crearOrden() {
  
+    //var idOrden = '';
     const idCliente = this.tokenService.getIDCuenta(); // Obteniendo el ID del cliente desde el token
     this.orden = {
       idCliente: idCliente,
@@ -186,10 +205,65 @@ export class ConfirmarOrdenComponent implements OnInit {
       idCupon: this.codigoCupon || 'no hay'
     };
 
+   
     this.clienteService.crearOrden(this.orden).subscribe({
+      
+      next: (respuesta) => {
+        if (!respuesta.error) {
+          
+          // console.log(respuesta);
+          // alert(respuesta); // Muestra mensaje de éxito
+           var res = String(respuesta.respuesta) ;
+           alert(res);
+
+           this.idOrden = String(res.split("-")[1]);
+          
+           
+           this.clienteService.realizarPago(this.idOrden).subscribe({
+            next: (respuesta: MensajeDTO) => {
+              if (!respuesta.error) {
+                //this.cuponInfo = respuesta.respuesta;
+                //alert(respuesta.respuesta); // Muestra mensaje de éxito
+                console.log(respuesta);
+              
+                
+                //window.location.href = respuesta.respuesta.initPoint;
+              } else {
+                alert(respuesta.error); // Muestra mensaje de error
+              }
+            },
+            error: (error) => {
+              alert('Ocurrió un error psarela'); // Manejo de error en caso de fallo de la solicitud
+              console.error(error);
+            }
+          });
+           //console.log(idOrden, 'hi');
+           //idOrden=respuesta.
+          // this.obtenerCupon();
+          
+           
+         } /*else {
+           alert(respuesta.error); // Muestra mensaje de error
+        }*/
+      },
+      error: (error) => {
+        alert('Ocurrió un error de pago'); // Manejo de error en caso de fallo de la solicitud
+        console.error(error);
+      },
+    });
+    
+    /*.subscribe({
       next: (respuesta: MensajeDTO) => {
         if (!respuesta.error) {
-          alert(respuesta.respuesta); // Muestra mensaje de éxito
+          
+         // console.log(respuesta);
+         // alert(respuesta); // Muestra mensaje de éxito
+          var res = String(respuesta.respuesta) ;
+          alert(res);
+
+          this.idOrden= String(res.split("-")[1]);
+          //console.log(idOrden, 'hi');
+          //idOrden=respuesta.
          // this.obtenerCupon();
           
         } else {
@@ -200,8 +274,11 @@ export class ConfirmarOrdenComponent implements OnInit {
         alert('Ocurrió un error al redimir el cupón'); // Manejo de error en caso de fallo de la solicitud
         console.error(error);
       }
-    });
+    });*/
     console.log("Orden creada:", this.orden);
+    
+    //console.log(this.idOrden);
+    //return idOrden;
     // Aquí puedes llamar al servicio para enviar la orden al backend
   }
     // Método para aplicar el cupón  this.cuponInfo = this.clienteService.obtenerInformacionCupon(this.codigoCupon);
@@ -253,7 +330,24 @@ export class ConfirmarOrdenComponent implements OnInit {
    }
 
   confirmarPago() {
-    this.crearOrden();
+   // this.crearOrden();
+    
+    this.clienteService.realizarPago(this.idOrden).subscribe({
+      next: (respuesta: MensajeDTO) => {
+        if (!respuesta.error) {
+          //this.cuponInfo = respuesta.respuesta;
+          //alert(respuesta.respuesta); // Muestra mensaje de éxito
+          console.log(respuesta);
+        } else {
+          alert(respuesta.error); // Muestra mensaje de error
+        }
+      },
+      error: (error) => {
+        alert('Ocurrió un error psarela'); // Manejo de error en caso de fallo de la solicitud
+        console.error(error);
+      }
+    });
+   //this.crearOrden();
     alert('Pago confirmado. Gracias por su compra.');
     // Aquí puedes agregar la lógica para finalizar el proceso de pago y enviar la orden
   }

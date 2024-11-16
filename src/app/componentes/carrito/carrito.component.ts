@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetalleCarritoDTO } from '../../dto/carrito/detalleCarrito-dto';
 import { EventoDTO } from '../../dto/evento-dto';
@@ -17,18 +17,32 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })
-export class CarritoComponent {
+export class CarritoComponent implements OnInit{
   itemsCarrito!: DetalleCarritoDTO[];
   carrito!: CarritoDTO;
   idCuenta!: any;
   // Mapa para almacenar los nombres de los eventos por idEvento
   nombresEventos = new Map<string, string>();
+  eventos!: EventoDTO[];
+
   preciosItem = new Map<string, number>();
 
   
   itemsSeleccionados: DetalleCarritoDTO[] = [];
   textoBtnEliminar: string = '';
 
+  ngOnInit(): void {
+    this.publicoService.listarTodosEventos().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.eventos = data.respuesta;
+        //console.log(this.eventos);
+      },
+      error: (error) => {
+        console.error( error);
+      }
+    });
+  }
   constructor(
     private clienteService: ClienteService,
     private tokenService: TokenService,
@@ -84,29 +98,23 @@ export class CarritoComponent {
     if (this.preciosItem.has(item.idEvento)) {
       return this.preciosItem.get(item.idEvento)! * item.cantidad;
     }
-
   
-    // Llamar al servicio para obtener el evento y su precio
-    this.publicoService.obtenerEvento(item.idEvento).subscribe({
-      next: (data) => {
-        const evento = data.respuesta as EventoDTO;
-  
-        // Encontrar la localidad correcta y su precio
-        const localidad = evento.localidades.find(loc => loc.nombre === item.nombreLocalidad);
-        if (localidad) {
-          const precioTotal = localidad.precio * item.cantidad;
-          this.preciosItem.set(item.idEvento, localidad.precio);
-          console.log(`Precio actualizado para el ítem con idEvento ${item.idEvento}:`, precioTotal);
-        }
-      },
-      error: (error) => {
-        console.error(`Error obteniendo el evento con idEvento ${item.idEvento}`, error);
+    // Buscar el evento en la lista ya cargada en `eventos`
+    const evento = this.eventos.find(e => e.id === item.idEvento);
+    if (evento) {
+      // Encontrar la localidad correcta y su precio
+      const localidad = evento.localidades.find(loc => loc.nombre === item.nombreLocalidad);
+      if (localidad) {
+        const precioTotal = localidad.precio * item.cantidad;
+        this.preciosItem.set(item.idEvento, localidad.precio);
+        return precioTotal;
       }
-    });
+    }
   
-    // Devolver 0 temporalmente hasta que se obtenga el precio
+    // Si no se encuentra el evento o la localidad, devolver 0
     return 0;
   }
+  
   
   public obtenerEvento(idEvento: string) {
     // Verificar si el nombre del evento ya está en el mapa para evitar solicitudes duplicadas
