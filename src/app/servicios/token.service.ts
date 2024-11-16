@@ -11,11 +11,6 @@ const TOKEN_KEY = "AuthToken";
  providedIn: 'root'
 })
 export class TokenService {
-  getCodigo() {
-    throw new Error('Method not implemented.');
-  }
-
-  
 
 
  constructor(private router: Router) {
