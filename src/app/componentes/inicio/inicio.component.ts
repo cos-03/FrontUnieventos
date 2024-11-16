@@ -28,6 +28,7 @@ export class InicioComponent implements OnInit {
   selectedEvento: string = '';
   idCuenta!: any;
 
+
   evetosPreferencia!: EventoDTO;
 
   eventosPreferencia: ItemEventoDTO[] = [];
@@ -110,8 +111,10 @@ export class InicioComponent implements OnInit {
     this.listarEventos();
  }
 
- ngOnInit(): void {
-  
+ ngOnInit(): void { 
+  this.cargarCiudades();
+  this.cargarEventos();
+
   this.obtenerEventos();
   this.listarCiudades();
   this.listarEventos();
@@ -148,26 +151,32 @@ public listarCiudades(): void {
 }
 
 // Método para filtrar eventos
-public filtrarEventos(): void {
-  console.log('Filtrando eventos...');
-  console.log('Ciudad seleccionada:', this.selectedCiudad);
-  console.log('Fecha seleccionada:', this.selectedFecha);
-  console.log('Evento seleccionado:', this.selectedEvento);
+// Método para filtrar eventos (integrando preferencias)
+public filtrar(): void {
+  console.log("Filtrando eventos...");
 
-  this.eventosFiltrados = this.eventos.filter((evento) => {
-    // Asegurarse de que la fecha sea un objeto Date
-    let eventoFecha = new Date(evento.fecha); // Convierte la fecha a un objeto Date
-    
-    let matchesCiudad = this.selectedCiudad ? evento.ciudad === this.selectedCiudad : true;
-    let matchesFecha = this.selectedFecha ? eventoFecha.toISOString().split('T')[0] === this.selectedFecha : true;
-    let matchesEvento = this.selectedEvento ? evento.nombre === this.selectedEvento : true;
-    
-    console.log('Evento:', evento.nombre, ' - Ciudad:', evento.ciudad, ' - Fecha:', eventoFecha);
+  let eventosBase = this.filtrarPorPreferencia
+    ? this.eventosPreferencia
+    : this.eventosTodos;
+
+  this.eventosFiltrados = eventosBase.filter((evento) => {
+    let eventoFecha = new Date(evento.fecha);
+    let matchesCiudad = this.selectedCiudad
+      ? evento.ciudad === this.selectedCiudad
+      : true;
+    let matchesFecha = this.selectedFecha
+      ? eventoFecha.toISOString().split("T")[0] === this.selectedFecha
+      : true;
+    let matchesEvento = this.selectedEvento
+      ? evento.nombre.toLowerCase().includes(this.selectedEvento.toLowerCase())
+      : true;
+
     return matchesCiudad && matchesFecha && matchesEvento;
   });
-  
-  console.log('Eventos filtrados:', this.eventosFiltrados);
+
+  console.log("Eventos filtrados:", this.eventosFiltrados);
 }
+
 
 
  public listarEventos(){
@@ -183,4 +192,47 @@ public filtrarEventos(): void {
 }
 
 
+
+ 
+
+  // Cargar las ciudades desde el backend
+  cargarCiudades(): void {
+    this.publicoService.listarCiudades().subscribe({
+      next: (data) => {
+        this.ciudades = data.respuesta;
+      },
+      error: (error) => {
+        console.error('Error al cargar ciudades:', error);
+      }
+    });
+  }
+
+  // Cargar los eventos desde el backend
+  cargarEventos(): void {
+    this.publicoService.listarEventos().subscribe({
+      next: (data) => {
+        this.eventos = data.respuesta;
+        this.eventosFiltrados = [...this.eventos]; // Mostrar todos los eventos por defecto
+      },
+      error: (error) => {
+        console.error('Error al cargar eventos:', error);
+      }
+    });
+  }
+
+  // Método para filtrar eventos
+  filtrarEventos(): void {
+    this.eventosFiltrados = this.eventos.filter((evento) => {
+      const eventoFecha = new Date(evento.fecha); // Asegura que la fecha sea un objeto Date
+      const matchesCiudad = this.selectedCiudad ? evento.ciudad === this.selectedCiudad : true;
+      const matchesFecha = this.selectedFecha
+        ? eventoFecha.toISOString().split('T')[0] === this.selectedFecha
+        : true;
+      const matchesEvento = this.selectedEvento ? evento.nombre === this.selectedEvento : true;
+
+      return matchesCiudad && matchesFecha && matchesEvento;
+    });
+  }
 }
+
+

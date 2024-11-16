@@ -47,7 +47,7 @@ export const routes: Routes = [
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
    { path: 'recuperar-contrasenia', component: RecuperarContraseniaComponent },  // Ruta para recuperar contraseña
-   { path: 'historial-compras/:id', component: HistorialComprasComponent, },  // Ruta para historial contraseña
+   //{ path: 'historial-compras/:id', component: HistorialComprasComponent },  // Ruta para historial contraseña
    { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
    { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
    { path: 'activar-cuenta', component: ActivarCuentaComponent, },
@@ -58,6 +58,6 @@ export const routes: Routes = [
    { path: "gestion-mis-boletas", component: BoletaComponent },//, canActivate: [RolesGuard], canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }
 
    { path: 'panel-admin', component: PanelAdminComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
-   { path: "historial-compras", component: HistorialComprasComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+   { path: "historial-compras/:id", component: HistorialComprasComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
    { path: "**", pathMatch: "full", redirectTo: "" }  // Redirección a la página de inicio para rutas no encontradas
 ];
