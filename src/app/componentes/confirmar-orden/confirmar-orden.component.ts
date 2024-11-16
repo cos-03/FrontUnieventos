@@ -230,7 +230,7 @@ export class ConfirmarOrdenComponent implements OnInit {
                 console.log(respuesta);
               
                 
-                //window.location.href = respuesta.respuesta.initPoint;
+                window.location.href = respuesta.respuesta.initPoint;
               } else {
                 alert(respuesta.error); // Muestra mensaje de error
               }
