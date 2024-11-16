@@ -23,6 +23,7 @@ import { ObtenerCuentaComponent } from './componentes/obtener-cuenta/obtener-cue
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { BoletaComponent } from './componentes/gestion-mis-boletas/gestion-mis-boletas.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
+import { NuevaContraseniaComponent } from './componentes/nueva-contrasenia/nueva-contrasenia.component';
 
 
 export const routes: Routes = [
@@ -50,6 +51,7 @@ export const routes: Routes = [
    { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
    { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
    { path: 'activar-cuenta', component: ActivarCuentaComponent, },
+   { path: 'nueva-contrasenia', component: NuevaContraseniaComponent }, //ruta para cambiar contrasenia sin estar logueado, por ¿Olvidaste tu Contrasenia?
    { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },

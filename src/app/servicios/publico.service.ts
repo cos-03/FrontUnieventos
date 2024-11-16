@@ -76,6 +76,9 @@ public obtenerEventoId(id: string): Observable<MensajeDTO> {
   return this.http.get<MensajeDTO>(`${this.publicoURL}/obtener-evento/${id}`);
 }
 
+reenviarCodigoActivacion(correo: string): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(`${this.publicoURL}/enviar-codigo-auth/${correo}`);
+}
 
 }
 

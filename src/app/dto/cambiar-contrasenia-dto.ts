@@ -1,5 +1,5 @@
 export interface CambiarPasswordDTO {
     correo: String ,
-    codigoVerificacion:string,
+    codigoVerificacion:String,
     passwordNueva: String 
 }
