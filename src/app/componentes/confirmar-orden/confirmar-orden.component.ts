@@ -63,9 +63,12 @@ export class ConfirmarOrdenComponent implements OnInit {
     });
     this.publicoService.listarTodosEventos().subscribe({
       next: (data) => {
-        console.log(data);
+       // console.log(data);
         this.eventos = data.respuesta;
-        console.log(this.eventos);
+        this.eventos.forEach(evento => {
+          this.nombresEventos.set(evento.id, evento.nombre);
+        });
+        //console.log(this.eventos);
       },
       error: (error) => {
         console.error( error);
