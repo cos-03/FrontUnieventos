@@ -94,7 +94,7 @@ export class GestionEventosComponent {
   this.seleccionados.forEach((e1: { id: string  }) => {
     this.adminService.eliminarEvento(e1.id).subscribe({
       next: (data) => {
-      
+      console.log(data.respuesta);
       },
       error: (error) => {
         console.error(error);
