@@ -70,7 +70,6 @@ private crearFormulario() {
    nombre: ['', [Validators.required]],
    descripcion: ['', [Validators.required]],
    tipo: ['', [Validators.required]],
-   direccion: ['', [Validators.required]],
    ciudad: ['', [Validators.required]],
    localidades: this.formBuilder.array([]),
    imagenImportada: ['', [Validators.required]],
