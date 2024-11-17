@@ -48,7 +48,7 @@ export const routes: Routes = [
    { path: 'editar-cupon/:id', component: EditarCuponComponent,   canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] }  },
    { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
    { path: 'editar-evento/:id', component: EditarEventoComponent ,canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
-   { path: 'editar-cuenta/:id', component: EditarCuentaComponent ,canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent  },
    { path: 'obtener-cuenta/:id', component: ObtenerCuentaComponent  },
    { path: 'confirmar-orden', component: ConfirmarOrdenComponent },  // Ruta para confirmar orden
    { path: 'agregar-item', component: AgregarItemComponent },  // Ruta para agregar ítems
