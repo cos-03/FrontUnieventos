@@ -1,0 +1,17 @@
+lista = [1, 2, 3, 4, 5, 2, 3, 4, 1, 1]
+
+# Crear un diccionario para contar las ocurrencias
+contador = {}
+
+# Contar las ocurrencias de cada número
+for num in lista:
+    if num in contador:
+        contador[num] += 1
+    else:
+        contador[num] = 1
+
+print(contador)
+
+# Imprimir el número seguido de los asteriscos
+for num, count in sorted(contador.items()):
+    print(f"{num}:{'*' * count}")

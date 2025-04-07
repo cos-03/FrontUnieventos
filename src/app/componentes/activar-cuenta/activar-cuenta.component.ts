@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
+<<<<<<< Updated upstream
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivarCuentaDTO } from '../../dto/activar-cuenta-dto';
 import { PublicoService } from '../../servicios/publico.service';
 import Swal from 'sweetalert2';
+=======
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-activar-cuenta',
   standalone: true,
+<<<<<<< Updated upstream
   imports: [ReactiveFormsModule],
+=======
+  imports: [],
+>>>>>>> Stashed changes
   templateUrl: './activar-cuenta.component.html',
   styleUrl: './activar-cuenta.component.css'
 })
 export class ActivarCuentaComponent {
 
+<<<<<<< Updated upstream
   formulario!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private publicService: PublicoService, private router: Router) {
@@ -82,4 +90,6 @@ export class ActivarCuentaComponent {
     }
   }
 
+=======
+>>>>>>> Stashed changes
 }
