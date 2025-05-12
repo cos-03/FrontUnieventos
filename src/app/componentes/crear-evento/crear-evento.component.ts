@@ -24,7 +24,7 @@ export class CrearEventoComponent {
   ciudades: string[];
   imagenPortada?: File;
   imagenLocalidades?: File;
-  
+
   //adminService: any;
 
 
@@ -42,15 +42,15 @@ export class CrearEventoComponent {
         Swal.fire("Error!", error.error.respuesta, "error");
       }
     });
-   
-   
+
+
    }
-   
 
 
 
-   
- 
+
+
+
 
 constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,private adminService: AdministradorService ) {
  this.crearFormulario();
@@ -59,8 +59,8 @@ constructor(private formBuilder: FormBuilder,private publicoService: PublicoServ
  this.listarCiudades();
  this.listarTipos();
 
- 
- 
+
+
 }
 
 
@@ -72,10 +72,11 @@ private crearFormulario() {
    tipo: ['', [Validators.required]],
    ciudad: ['', [Validators.required]],
    localidades: this.formBuilder.array([]),
-   imagenImportada: ['', [Validators.required]],
    fechaEvento: ['', Validators.required], // Campo de fecha
+   imagenImportada: ['', [Validators.required]],
+
    imagenLocalidades: ['', [Validators.required]]
-   
+
  });
 }
 public onFileChange(event: any, tipo: string) {
@@ -84,7 +85,7 @@ public onFileChange(event: any, tipo: string) {
     tipo == 'localidades' ? (this.imagenLocalidades = file) : (this.imagenPortada = file);
   }
  }
- 
+
 
 get localidades(): FormArray {
   return this.crearEventoForm.get('localidades') as FormArray;
@@ -112,7 +113,7 @@ public listarTipos(){
     },
   });
  }
- 
+
  public listarCiudades(){
   this.publicoService.listarCiudades().subscribe({
     next: (data) => {
@@ -123,13 +124,13 @@ public listarTipos(){
     },
   });
  }
- 
+
  public subirImagen(tipo:string){
   const formData = new FormData();
   const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
   const formControl = tipo == 'portada' ? 'imagenImportada' : 'imagenLocalidades';
- 
- 
+
+
   formData.append('imagen', imagen!);
 
   this.adminService.subirImagen(formData).subscribe({
@@ -141,10 +142,10 @@ public listarTipos(){
       Swal.fire("Error!", error.error.respuesta, "error");
     }
   });
- 
- 
+
+
  }
 
- 
- 
+
+
 }
