@@ -52,10 +52,15 @@ export class CrearEventoComponent {
 
 
 
-constructor(private formBuilder: FormBuilder,private publicoService: PublicoService,private adminService: AdministradorService ) {
+constructor(
+  private formBuilder: FormBuilder,
+  private publicoService: PublicoService,
+  private adminService: AdministradorService
+
+ ) {
  this.crearFormulario();
  this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
- this.ciudades = ['armenia', 'cartagena', 'pereira', 'cali'];
+ this.ciudades = ['Armenia', 'Cartagena', 'Pereira', 'Cali'];
  this.listarCiudades();
  this.listarTipos();
 
@@ -73,7 +78,7 @@ private crearFormulario() {
    ciudad: ['', [Validators.required]],
    localidades: this.formBuilder.array([]),
    fechaEvento: ['', Validators.required], // Campo de fecha
-   imagenImportada: ['', [Validators.required]],
+   imagenPortada: ['', [Validators.required]],
 
    imagenLocalidades: ['', [Validators.required]]
 
@@ -128,8 +133,8 @@ public listarTipos(){
  public subirImagen(tipo:string){
   const formData = new FormData();
   const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
-  const formControl = tipo == 'portada' ? 'imagenImportada' : 'imagenLocalidades';
-
+  const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
+  console.log(this.crearEventoForm.value);
 
   formData.append('imagen', imagen!);
 

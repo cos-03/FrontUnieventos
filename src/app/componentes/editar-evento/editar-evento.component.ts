@@ -185,6 +185,7 @@ export class EditarEventoComponent implements OnInit {
     const formData = new FormData();
     const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
     const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
+    console.log(this.crearEventoForm.value);
 
 
     formData.append('imagen', imagen!);

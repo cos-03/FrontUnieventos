@@ -17,7 +17,7 @@
         <label class="form-label">Tipo:</label>
         <select formControlName="tipo" class="form-select">
             <option value="">Seleccione un tipo evento</option>
-            <option *ngFor="let item of tiposDeEvento" [value]="tiposDeEvento">{{ tiposDeEvento }}</option>
+            <option *ngFor="let item of tiposDeEvento" [value]="item">{{ item }}</option>
         </select>
     </div>
 
@@ -38,7 +38,7 @@
         <label class="form-label">Ciudad:</label>
         <select formControlName="ciudad" class="form-select">
             <option value="">Seleccione una ciudad</option>
-            <option *ngFor="let item of ciudades" [value]="ciudades">{{ ciudades }}</option>
+            <option *ngFor="let item of ciudades" [value]="item">{{ item }}</option>
         </select>
     </div>
 
@@ -72,6 +72,8 @@
             <button type="button" class="btn btn-primary" (click)="subirImagen('portada')">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Subir
             </button>
+            <img src="{{crearEventoForm.get('imagenPortada')?.value.url}}" width="100px" />
+
         </div>
     </div>
 
@@ -83,6 +85,7 @@
             <button type="button" class="btn btn-primary" (click)="subirImagen('localidades')">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Subir
             </button>
+            <img src="{{crearEventoForm.get('imagenLocalidades')?.value.url}}" width="100px" />
         </div>
     </div>
 

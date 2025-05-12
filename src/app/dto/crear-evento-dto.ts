@@ -2,7 +2,7 @@ import { LocalidadDTO } from "./localidad-dto";
 
 
 export interface CrearEventoDTO {
-    
+
 
     nombre: String ,
     descripcion: String ,
@@ -11,7 +11,7 @@ export interface CrearEventoDTO {
     fechaEvento: Date ,
     ciudad: String ,
     localidades: LocalidadDTO[] ,
-    imagenImportada:String 
+    imagenImportada:String
    // direccion: string, // Añadido
     //imagenPortada: string, // Añadido para la imagen de portada
 }
