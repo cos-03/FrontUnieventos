@@ -1,17 +1,17 @@
 <form [formGroup]="crearEventoForm" class="container mt-4">
-
+  
     <!-- Campo Nombre -->
     <div class="mb-3">
         <label class="form-label">Nombre:</label>
         <input type="text" class="form-control" formControlName="nombre"/>
     </div>
-
+  
     <!-- Campo Descripción -->
     <div class="mb-3">
         <label class="form-label">Descripción:</label>
         <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
     </div>
-
+  
     <!-- Campo Tipo -->
     <div class="mb-3">
         <label class="form-label">Tipo:</label>
@@ -32,7 +32,7 @@
         <label class="form-label">Fecha del Evento:</label>
         <input type="date" class="form-control" formControlName="fechaEvento"/>
     </div>
-
+  
     <!-- Campo Ciudad -->
     <div class="mb-3">
         <label class="form-label">Ciudad:</label>
@@ -41,20 +41,20 @@
             <option *ngFor="let item of ciudades" [value]="item">{{ item }}</option>
         </select>
     </div>
-
+  
     <!-- Campo Localidades -->
     <div formArrayName="localidades" class="mb-3">
         <label class="form-label">Localidades:</label>
         <button type="button" class="btn btn-primary btn-sm mb-2" (click)="agregarLocalidad()">Agregar localidad</button>
-
+        
         <div *ngFor="let localidad of localidades.controls; let i = index" [formGroupName]="i" class="mb-2">
             <div class="input-group mb-2">
                 <!-- Campo Nombre Localidad -->
                 <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la localidad"/>
-
+                
                 <!-- Campo Precio Localidad -->
                 <input type="number" class="form-control" formControlName="precio" placeholder="Precio"/>
-
+                
                 <!-- Campo Capacidad Máxima Localidad -->
                 <input type="number" class="form-control" formControlName="capacidadMaxima" placeholder="Capacidad máxima"/>
 
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-
+  
     <!-- Campo Imagen Portada -->
     <div class="mb-3">
         <label class="form-label">Imagen Portada:</label>
@@ -72,11 +72,10 @@
             <button type="button" class="btn btn-primary" (click)="subirImagen('portada')">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Subir
             </button>
-            <img src="{{crearEventoForm.get('imagenPortada')?.value.url}}" width="100px" />
-
+            <img src="{{crearEventoForm.get('imagenImportada')?.value.url}}" width="100px" />
         </div>
     </div>
-
+  
     <!-- Campo Imagen Localidades -->
     <div class="mb-3">
         <label class="form-label">Imagen Localidades:</label>
@@ -88,7 +87,7 @@
             <img src="{{crearEventoForm.get('imagenLocalidades')?.value.url}}" width="100px" />
         </div>
     </div>
-
+  
     <!-- Botón Crear Evento -->
     <div class="text-center mt-4">
         <button type="button" class="btn btn-success" (click)="crearEvento()">Crear Evento</button>

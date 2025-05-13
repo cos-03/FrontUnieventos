@@ -34,7 +34,7 @@ export class EditarEventoComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.crearFormulario();
-    this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
+    this.tiposDeEvento = ['DEPORTE','CONCIERTO','CULTURAL','MODA','BELLEZA'];
     this.ciudades = ['Armenia', 'Cartagena', 'Pereira', 'Cali'];
   }
 
@@ -68,16 +68,16 @@ export class EditarEventoComponent implements OnInit {
             ? new Date(evento.fechaEvento).toISOString().split('T')[0]
             : '';
 
-            this.crearEventoForm.patchValue({
-              id: evento.id,
-              nombre: evento.nombre,
-              descripcion: evento.descripcion,
-              tipo: evento.tipo,
-              ciudad: evento.ciudad,
-              fechaEvento: evento.fechaEvento,
-              imagenLocalidades: {url: evento.imagenLocalidades},
-              imagenPortada: {url: evento.imagenPortada }
-            });
+          this.crearEventoForm.patchValue({
+            id: evento.id,
+            nombre: evento.nombre,
+            descripcion: evento.descripcion,
+            tipo: evento.tipo,
+            ciudad: evento.ciudad,
+            fechaEvento: evento.fechaEvento,
+            imagenLocalidades: { url: evento.imagenLocalidades },
+            imagenPortada: { url: evento.imagenPortada }
+          });
 
           this.localidades.clear();
           evento.localidades.forEach((localidad: any) => {
@@ -140,7 +140,7 @@ export class EditarEventoComponent implements OnInit {
       const file = event.target.files[0];
       tipo == 'localidades' ? (this.imagenLocalidades = file) : (this.imagenPortada = file);
     }
-   }
+  }
 
 
   get localidades(): FormArray {
@@ -159,7 +159,7 @@ export class EditarEventoComponent implements OnInit {
     this.localidades.removeAt(indice);
   }
 
-  public listarTipos(){
+  public listarTipos() {
     this.publicoService.listarTipos().subscribe({
       next: (data) => {
         this.tiposDeEvento = data.respuesta;
@@ -168,9 +168,9 @@ export class EditarEventoComponent implements OnInit {
         console.error(error);
       },
     });
-   }
+  }
 
-   public listarCiudades(){
+  public listarCiudades() {
     this.publicoService.listarCiudades().subscribe({
       next: (data) => {
         this.ciudades = data.respuesta;
@@ -179,9 +179,9 @@ export class EditarEventoComponent implements OnInit {
         console.error(error);
       },
     });
-   }
+  }
 
-   public subirImagen(tipo:string){
+  public subirImagen(tipo: string) {
     const formData = new FormData();
     const imagen = tipo == 'portada' ? this.imagenPortada : this.imagenLocalidades;
     const formControl = tipo == 'portada' ? 'imagenPortada' : 'imagenLocalidades';
@@ -201,8 +201,8 @@ export class EditarEventoComponent implements OnInit {
     });
 
 
-   }
-
-
-
   }
+
+
+
+}

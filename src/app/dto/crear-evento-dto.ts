@@ -4,14 +4,14 @@ import { LocalidadDTO } from "./localidad-dto";
 export interface CrearEventoDTO {
 
 
-    nombre: String ,
+    nombre: string ,
     descripcion: String ,
     imagenLocalidades: String ,
     tipo: string ,
     fechaEvento: Date ,
-    ciudad: String ,
+    ciudad: string ,
     localidades: LocalidadDTO[] ,
-    imagenImportada:String
+    imagenImportada:string
    // direccion: string, // Añadido
     //imagenPortada: string, // Añadido para la imagen de portada
 }
