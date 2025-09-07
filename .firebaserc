@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "front-unieventos-uq"
-  }
+    "default": "front-unieventos-uq",
+    "sw3": "unieventosfrontsw3"
+  },
+  "targets": {},
+  "etags": {}
 }
