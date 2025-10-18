@@ -2,7 +2,9 @@
   "projects": {
     "default": "unieventosfrontsw3",
     "sw3": "unieventosfrontsw3",
-    "frontSW3": "unieventosfrontsw3"
+    "frontSW3": "unieventosfrontsw3",
+    "  ": "unieventossw3",
+    "frontsofware3": "unieventosfrontsw3"
   },
   "targets": {},
   "etags": {}
