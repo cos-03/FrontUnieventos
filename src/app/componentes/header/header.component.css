@@ -1,22 +1,54 @@
+/* 👇 Estilos de accesibilidad */
+:root {
+  --font-size: 16px;
+}
+
+body {
+  font-size: var(--font-size);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.high-contrast a,
+.high-contrast button,
+.high-contrast label,
+.high-contrast span,
+.high-contrast .nav-link {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+/* Botones flotantes */
+.accessibility-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* 👇 Tus estilos personalizados */
 .nav-link {
-    padding: 5px 10px; /* Reduce el espacio interior */
-    font-size: 0.85rem; /* Ajusta el tamaño de texto */
-  }
-  
-  .nav-pills .nav-link.active {
-    background-color: #007bff; /* Cambia el color del botón activo */
-    color: white;
-  }
-  
-  .nav-item {
-    margin: 0 5px; /* Ajusta el espacio entre botones */
-  }
-  span.text-muted {
-    font-size: 0.9rem; /* Tamaño más pequeño para el texto */
-    font-weight: 500;  /* Negrita media */
-  }
-  
-  button.btn-sm {
-    padding: 0.25rem 0.5rem; /* Reduce el tamaño del botón */
-  }
-  
+  padding: 5px 10px; /* Reduce el espacio interior */
+  font-size: 0.85rem; /* Ajusta el tamaño de texto */
+}
+
+.nav-pills .nav-link.active {
+  background-color: #007bff; /* Cambia el color del botón activo */
+  color: white;
+}
+
+.nav-item {
+  margin: 0 5px; /* Ajusta el espacio entre botones */
+}
+
+span.text-muted {
+  font-size: 0.9rem; /* Tamaño más pequeño para el texto */
+  font-weight: 500;  /* Negrita media */
+}
+
+button.btn-sm {
+  padding: 0.25rem 0.5rem; /* Reduce el tamaño del botón */
+}
