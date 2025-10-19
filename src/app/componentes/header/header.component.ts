@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { TokenService } from '../../servicios/token.service';
 import { EditarCuentaDTO } from '../../dto/editar-cuenta-dto';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -16,7 +17,6 @@ export class HeaderComponent {
   correo: string = "";
   IdCuenta: string = "";
 
-  // Accesibilidad
   fontSize = 16;
   highContrast = false;
 
@@ -27,7 +27,6 @@ export class HeaderComponent {
       this.IdCuenta = this.tokenService.getIDCuenta();
     }
 
-    // Restaurar preferencias si existen
     const savedFont = localStorage.getItem('fontSize');
     const savedContrast = localStorage.getItem('highContrast');
 

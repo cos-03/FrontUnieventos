@@ -1,4 +1,3 @@
-/* 👇 Estilos de accesibilidad */
 :root {
   --font-size: 16px;
 }
@@ -24,31 +23,36 @@ body {
 
 /* Botones flotantes */
 .accessibility-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-/* 👇 Tus estilos personalizados */
+/* Tus estilos personalizados */
 .nav-link {
-  padding: 5px 10px; /* Reduce el espacio interior */
-  font-size: 0.85rem; /* Ajusta el tamaño de texto */
+  padding: 5px 10px;
+  font-size: var(--font-size);
 }
 
 .nav-pills .nav-link.active {
-  background-color: #007bff; /* Cambia el color del botón activo */
+  background-color: #007bff;
   color: white;
 }
 
 .nav-item {
-  margin: 0 5px; /* Ajusta el espacio entre botones */
+  margin: 0 5px;
 }
 
 span.text-muted {
-  font-size: 0.9rem; /* Tamaño más pequeño para el texto */
-  font-weight: 500;  /* Negrita media */
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 button.btn-sm {
-  padding: 0.25rem 0.5rem; /* Reduce el tamaño del botón */
+  padding: 0.25rem 0.5rem;
 }
