@@ -1,0 +1,18 @@
+:root {
+  --font-size: 16px;
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+body {
+  font-size: var(--font-size);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+/* Modo de alto contraste */
+body.high-contrast {
+  --background-color: #000000;
+  --text-color: #ffffff;
+}

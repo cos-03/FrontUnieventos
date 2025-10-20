@@ -4,7 +4,7 @@
 
 body {
   font-size: var(--font-size);
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
 .high-contrast {
@@ -12,47 +12,12 @@ body {
   color: #fff !important;
 }
 
-.high-contrast a,
-.high-contrast button,
-.high-contrast label,
-.high-contrast span,
-.high-contrast .nav-link {
-  color: #fff !important;
-  border-color: #fff !important;
+.accessibility-buttons button {
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
 }
 
-/* Botones flotantes */
-.accessibility-buttons {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 9999;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-/* Tus estilos personalizados */
-.nav-link {
-  padding: 5px 10px;
-  font-size: var(--font-size);
-}
-
-.nav-pills .nav-link.active {
-  background-color: #007bff;
-  color: white;
-}
-
-.nav-item {
-  margin: 0 5px;
-}
-
-span.text-muted {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-button.btn-sm {
-  padding: 0.25rem 0.5rem;
+.accessibility-buttons button:hover {
+  background-color: #0d6efd;
+  color: #fff;
 }
