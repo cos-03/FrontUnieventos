@@ -35,12 +35,11 @@ export class CarritoComponent implements OnInit{
     this.idCuenta = this.tokenService.getIDCuenta();
     this.publicoService.listarTodosEventos().subscribe({
       next: (data) => {
-        //console.log(data);
         this.eventos = data.respuesta;
         this.eventos.forEach(evento => {
           this.nombresEventos.set(evento.id, evento.nombre);
         });
-        //console.log(this.eventos);
+
       },
       error: (error) => {
         console.error( error);
@@ -61,9 +60,9 @@ export class CarritoComponent implements OnInit{
   procederAlPago() {
     // Realiza aquí cualquier acción o validación antes de redirigir
     if (this.carrito && this.carrito.id) {
-      console.log('Redirigiendo al pago para la orden:', this.carrito.id);
+      //console.log('Redirigiendo al pago para la orden:', this.carrito.id);
 
-      // Navegar a la ruta usando el `Router`
+      // Navegar a la ruta usando el Router
       this.router.navigate(['/confirmar-orden', this.carrito.id]);
     } else {
       console.error('Carrito no encontrado');
@@ -94,13 +93,12 @@ export class CarritoComponent implements OnInit{
     this.obtenerPrecio(item); // Recalcula el precio para el ítem
     this.clienteService.editarItemCarrito(this.carrito.id, item).subscribe({
       next: (data) => {
-        //console.log(data);
       },
       error: (error) => {
         console.error(error);
       },
     });
-    console.log('Ítem actualizado:', item);
+    console.log('Ítem actualizado:');
   }
 
 
@@ -114,7 +112,7 @@ export class CarritoComponent implements OnInit{
       return this.preciosItem.get(item.idEvento)! * item.cantidad;
     }
   
-    // Buscar el evento en la lista ya cargada en `eventos`
+    // Buscar el evento en la lista ya cargada en eventos
     const evento = this.eventos.find(e => e.id === item.idEvento);
     if (evento) {
       // Encontrar la localidad correcta y su precio
@@ -134,7 +132,7 @@ export class CarritoComponent implements OnInit{
   public obtenerEvento(idEvento: string) {
     // Verificar si el nombre del evento ya está en el mapa para evitar solicitudes duplicadas
     if (!this.nombresEventos.has(idEvento)) {
-        // Buscar el evento en la lista `eventos`
+        // Buscar el evento en la lista eventos
         const evento = this.eventos.find(e => e.id === idEvento);
         if (evento) {
           const nombreEvento = evento.nombre;
@@ -186,8 +184,7 @@ export class CarritoComponent implements OnInit{
 
       // Actualizar el carrito con los nuevos items
       this.carrito.items = this.itemsCarrito;
-       console.log(data);
-       
+
       },
       error: (error) => {
         console.error(error);

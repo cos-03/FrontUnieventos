@@ -14,7 +14,7 @@ export class PublicoService {
 
 
 
- private publicoURL = "https://proyectoavanzada-2.onrender.com/api/general";
+ private publicoURL = "https://proyectounieventos.onrender.com/api/general";
 
  
 
