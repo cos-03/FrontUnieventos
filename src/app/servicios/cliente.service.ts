@@ -18,7 +18,7 @@ import { TipoEventoDTO } from '../dto/tipo-evento-dto';
 })
 export class ClienteService {
   // ************ CORRECCIÓN CRÍTICA APLICADA: Se añadió 'http://' ************
-  private apiURL = "https://uni-backend-prod.us-east-2.elasticbeanstalk.com/api/cliente";
+  private apiURL = "https://unieventos-ardugrgcecace3ev.canadacentral-01.azurewebsites.net/api/cliente";
 
   private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('AuthToken');

@@ -13,7 +13,7 @@ export class AuthService {
   
 
 
- private authURL = "https://uni-backend-prod.us-east-2.elasticbeanstalk.com/api/auth";
+ private authURL = "https://unieventos-ardugrgcecace3ev.canadacentral-01.azurewebsites.net/api/auth";
  
 
 

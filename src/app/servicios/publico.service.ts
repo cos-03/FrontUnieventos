@@ -14,7 +14,7 @@ export class PublicoService {
 
 
 
- private publicoURL = "https://uni-backend-prod.us-east-2.elasticbeanstalk.com/api/general";
+ private publicoURL = "https://unieventos-ardugrgcecace3ev.canadacentral-01.azurewebsites.net/api/general";
 
  
 

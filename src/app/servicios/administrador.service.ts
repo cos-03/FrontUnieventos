@@ -15,7 +15,7 @@ import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
 export class AdministradorService {
 
  // ************ CORRECCIÓN CRÍTICA APLICADA: Se añadió 'http://' ************
- private adminURL = "https://uni-backend-prod.us-east-2.elasticbeanstalk.com/api/admin";
+ private adminURL = "https://unieventos-ardugrgcecace3ev.canadacentral-01.azurewebsites.net/api/admin";
 
 
  constructor(private http: HttpClient) { }
