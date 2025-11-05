@@ -14,7 +14,7 @@ export class PublicoService {
 
 
 
- private publicoURL = "https://proyectounieventos.onrender.com/api/general";
+ private publicoURL = "https://uni-backend-prod.us-east-2.elasticbeanstalk.com/api/general";
 
  
 
